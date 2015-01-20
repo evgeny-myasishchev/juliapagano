@@ -1,6 +1,8 @@
 var boot = require('./lib/boot');
+var express = require('express');
 
 boot.newApp()
 	.withAccessLog()
 	.withControllers(require('./controllers'))
-	.start({port: 3000});
+	.withServer(3000)
+	.start(express());
