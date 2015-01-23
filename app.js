@@ -3,7 +3,7 @@ var express = require('express');
 
 boot.newApp()
 	.withAccessLog()
-	.withControllers(require('./controllers'))
+	.withControllers(require('./app/controllers'))
 	.withViewEngine()
 	.withServer(3000)
 	.start(express());
