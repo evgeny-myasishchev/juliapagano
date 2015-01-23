@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}My Site{% endblock %}</title>
-
-  {% block head %}
-  <link rel="stylesheet" href="main.css">
-  {% endblock %}
+  
+  {{js('application.js')}}
 </head>
 <body>
   {% block content %}{% endblock %}
