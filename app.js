@@ -2,7 +2,7 @@ var boot = require('./lib/boot');
 var express = require('express');
 
 boot.newApp()
-	.withAccessLog()
+	.withLogging()
 	.withControllers(require('./app/controllers'))
 	.withViewEngine()
 	.withAssets()
