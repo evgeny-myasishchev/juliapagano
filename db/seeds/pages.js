@@ -1,32 +1,21 @@
 'use strict';
 
-module.exports.seed = function(knex, Promise) {
-	knex('pages').insert({
+exports.seed = function(knex, Promise) {
+	return knex.insert([{
 		title: 'Home',
-		url: '/',
+		path: '/',
 		content: '<h1>Hello, this is home page</h1>'
-	}).then(function(rows) {
-		console.log(rows);
-	}).catch(function(error) {
-		console.error(error);
-	});
-	// knex('pages').insert({
-	// 	title: 'Galleries',
-	// 	url: '/galleries',
-	// 	content: '<h1>Hello, this is galleries page</h1>'
-	// });
-	// knex('pages').insert({
-	// 	title: 'Blog',
-	// 	url: 'http://juliapagano.blogspot.co.uk/',
-	// 	is_external: true
-	// });
-	// knex('pages').insert({
-	// 	title: 'Contact',
-	// 	url: '/galleries',
-	// 	content: '<h1>Hello, this is contact page</h1>'
-	// });
-	//
-	// knex('users').select('title', 'url').then(function() {
-	// 	console.log(arguments);
-	// });
+	}, {
+		title: 'Galleries',
+		path: '/galleries',
+		content: '<h1>Hello, this is galleries page</h1>'
+	}, {
+		title: 'Blog',
+		path: 'http://juliapagano.blogspot.co.uk/',
+		is_external: true
+	}, {
+		title: 'Contacts',
+		path: '/contacts',
+		content: '<h1>Hello, this is contact page</h1>'
+	}]).into('pages');
 };
