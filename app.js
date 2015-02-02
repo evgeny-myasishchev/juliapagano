@@ -7,5 +7,6 @@ boot.newApp()
 	.withViewEngine()
 	.withAssets()
 	.withDb()
+	.withReadModels()
 	.withServer(3000)
 	.start(express());
