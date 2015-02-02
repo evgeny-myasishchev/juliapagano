@@ -18,5 +18,12 @@ module.exports = {
 		connection: {
 			filename: './db/development.sqlite3'
 		}
+	}, defaults),
+	
+	test: _.extend({
+		client: 'sqlite3',
+		connection: {
+			filename: './db/test.sqlite3'
+		}
 	}, defaults)
 };
