@@ -6,5 +6,6 @@ boot.newApp()
 	.withControllers(require('./app/controllers'))
 	.withViewEngine()
 	.withAssets()
+	.withDb()
 	.withServer(3000)
 	.start(express());
