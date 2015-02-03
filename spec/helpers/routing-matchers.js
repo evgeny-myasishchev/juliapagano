@@ -5,7 +5,7 @@ jasmine.Expectation.prototype.toRouteTo = function(controllers, controllerName, 
 		res.send('ok');
 	});
 	requestExpectation.expect(200).expect('ok').end(function(err) {
-		if(err) done(err);
+		if(err) fail(err);
 		expect(action).toHaveBeenCalled();
 		done();
 	});

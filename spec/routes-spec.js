@@ -11,7 +11,7 @@ describe('routes', function() {
 		bootApp.withControllers(controllers).start(app);
 	});
 	
-	it('should route / to home.index', function(done) {
-		expect(request(app).get('/')).toRouteTo(controllers, 'home', 'index', done);
+	it('should route /admin to home.index', function(done) {
+		expect(request(app).get('/admin')).toRouteTo(controllers, 'admin_controller', 'index', done);
 	});
 });

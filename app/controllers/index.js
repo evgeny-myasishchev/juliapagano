@@ -1,8 +1,8 @@
-// exports.home = {
-// 	index: function(req, res) {
-// 		res.render('home/index');
-// 	}
-// }
+exports.admin_controller = {
+	index: function(req, res) {
+		res.render('admin/index');
+	}
+}
 
 exports.pages_controller = {
 	createPageAction: function(page) {

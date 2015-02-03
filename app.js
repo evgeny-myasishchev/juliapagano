@@ -4,7 +4,7 @@ var controllers = require('./app/controllers');
 
 boot.newApp()
 	.withLogging()
-	// .withControllers(controllers)
+	.withControllers(controllers)
 	.withViewEngine()
 	.withAssets()
 	.withDb()
