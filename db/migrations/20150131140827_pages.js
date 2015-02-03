@@ -6,7 +6,7 @@ module.exports.up = function(knex, Promise) {
 		table.string('title').notNullable();
 		table.string('path').notNullable().unique();
 		table.boolean('is_external').defaultTo(false);
-		table.text('content');
+		table.string('template');
 		table.timestamps();
 	});
 };
