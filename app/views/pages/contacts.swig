@@ -2,6 +2,6 @@
 
 {% block title %}{{currentPage.title}}{% endblock %}
 
-{% block content %}
-<p>{{currentPage.content}}</p>
+{% block container %}
+<div class='row'>{{currentPage.title}}</div>
 {% endblock %}
