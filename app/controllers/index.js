@@ -7,9 +7,7 @@ exports.admin_controller = {
 exports.pages_controller = {
 	createPageAction: function(page) {
 		return function(req, res) {
-			res.render('page', {
-				currentPage: page
-			});
+			res.render(page.template, { currentPage: page });
 		}
 	}
 }
