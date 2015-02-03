@@ -1,4 +1,4 @@
-{% extends './layouts/application.swig' %}
+{% extends '../layouts/application.swig' %}
 
 {% block title %}{{currentPage.title}}{% endblock %}
 
