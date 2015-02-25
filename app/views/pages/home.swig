@@ -37,12 +37,12 @@
 
 <div class="row">
 	<div class="col-md-4">
-		<h2>Portrait session - <sup>£</sup> <strong>20</strong></h2>
+		<h2>Portrait session - £20</h2>
 		<p>What is included: pre-session consultation, 30 min shoot at your home or location of your choice, editing your images and providing private online gallery with 10-15 portraits to chose from.</p>
 		<p><a role="button" href="#" class="btn btn-primary">View samples &raquo;</a></p>
 	</div>
 	<div class="col-md-4">
-		<h2>Lifestyle session - <sup>£</sup> <strong>50</strong></h2>
+		<h2>Lifestyle session - £50</h2>
 		<p>What is included: pre-session consultation, 2 hour shoot at your home or location of your choice, editing your images and providing private online gallery with 30-50 pictures to chose from.</p>
 		<p><a role="button" href="#" class="btn btn-primary">View samples &raquo;</a></p>
 	</div>
