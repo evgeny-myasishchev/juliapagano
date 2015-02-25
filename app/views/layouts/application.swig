@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{% block title %}Julia Pagano{% endblock %}</title>
+	<title>{% block title %}Children and family photography in fife{% endblock %}</title>
 	{{css('vendor')}}
 	{{css('application')}}
 </head>
@@ -20,7 +20,7 @@
 							 <span class="icon-bar"></span>
 							 <span class="icon-bar"></span>
 						 </button>
-						 <a class="navbar-brand" href="#">Project name</a>
+						 <a class="navbar-brand" href="/">Photographer in fife</a>
 					 </div>
 					 <div id="navbar" class="navbar-collapse collapse">
 						 <ul class="nav navbar-nav">
@@ -36,12 +36,10 @@
 		 </div>
 	 </div>
 	
-	{%block page_heading %}{%endblock%}
 	<div class="container {% block container_classes %}{%endblock%}">
 		{% block container %}{%endblock%}
-		<footer>
-			<p class="pull-right"><a href="#">Back to top</a></p>
-			<p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+		<footer class='footer'>
+			<p>&copy; Julia Pagano 2015</p>
 		</footer>
 	</div>
 	{{js('vendor')}}
