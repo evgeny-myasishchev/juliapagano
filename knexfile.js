@@ -20,6 +20,14 @@ module.exports = {
 		}
 	}, defaults),
 	
+	production: _.extend({
+		client: 'postgres',
+		connection: {
+			host: 'localhost',
+			database: 'juliapagano'
+		}
+	}, defaults),
+	
 	test: _.extend({
 		client: 'sqlite3',
 		connection: {
