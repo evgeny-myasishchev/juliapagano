@@ -21,7 +21,16 @@ module.exports = function (shipit) {
 		return shipit.remote('source .shipit-profile && cd current && npm install');
 	});
 	
+	shipit.task('remote:migrate', function () {
+		return shipit.remote('source .shipit-profile && cd current && bin/knex migrate:latest');
+	});
+	
+	shipit.task('remote:seed', function () {
+		return shipit.remote('source .shipit-profile && cd current && bin/knex seed:run');
+	});
+	
 	shipit.on('published', function () {
+		shipit.start('remote:install-deps');
 		shipit.remote('touch current/tmp/restart.txt');
 	});
 };
