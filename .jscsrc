@@ -74,12 +74,12 @@
     "requireSemicolons": true,
     "requireShorthandArrowFunctions": true,
     "requireSpacesInsideImportedObjectBraces": true,
-    "safeContextKeyword": "_this",
+    "safeContextKeyword": "self",
     "validateLineBreaks": "LF",
     "validateQuoteMarks": { "mark": "'", "escape": true, "ignoreJSX": true },
     "validateIndentation": 2,
     "maximumLineLength": {
-        "value": 100,
+        "value": 150,
         "allExcept": ["urlComments"]
     }
 }

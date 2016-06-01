@@ -59,5 +59,8 @@
    */
 
   // Suppress warnings about == null comparisons.
-  "eqnull": true
+  "eqnull": true,
+
+  // Per project stuff.
+  "jasmine": true
 }

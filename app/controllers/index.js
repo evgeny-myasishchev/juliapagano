@@ -1,13 +1,15 @@
-exports.admin_controller = {
-	index: function(req, res) {
-		res.render('admin/index');
-	}
-}
+'use strict';
 
-exports.pages_controller = {
-	createPageAction: function(page) {
-		return function(req, res) {
-			res.render(page.template, { currentPage: page });
-		}
-	}
-}
+exports.adminController = {
+  index: function (req, res) {
+    res.render('admin/index');
+  },
+};
+
+exports.pagesController = {
+  createPageAction: function (page) {
+    return function (req, res) {
+      res.render(page.template, { currentPage: page });
+    };
+  },
+};

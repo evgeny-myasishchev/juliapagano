@@ -8,7 +8,7 @@
     "pretest": "npm run check-node-version && npm run lint",
     "test": "jasmine",
     "jscs": "jscs ./",
-    "jshint": "jshint --exclude node_modules .",
+    "jshint": "jshint .",
     "lint": "npm run jshint && npm run jscs"
   },
   "author": "Evgeny Myasishchev",
