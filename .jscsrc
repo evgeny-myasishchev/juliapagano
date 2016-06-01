@@ -81,5 +81,6 @@
     "maximumLineLength": {
         "value": 150,
         "allExcept": ["urlComments"]
-    }
+    },
+    "excludeFiles": ["node_modules", "vendor", "public"]
 }
