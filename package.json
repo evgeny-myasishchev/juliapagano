@@ -1,12 +1,17 @@
 {
   "name": "juliapagano",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Web site of Julia Pagano",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "check-node-version": "check-node-version --node `cat .nvmrc`",
+    "pretest": "npm run check-node-version && npm run lint",
+    "test": "jasmine",
+    "jscs": "jscs ./",
+    "jshint": "jshint --exclude node_modules .",
+    "lint": "npm run jshint && npm run jscs"
   },
-  "author": "",
+  "author": "Evgeny Myasishchev",
   "license": "ISC",
   "dependencies": {
     "connect-assets": "^4.4.0",
@@ -22,11 +27,14 @@
     "pg": "~4.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.3.1",
-    "supertest": "^0.15.0",
+    "check-node-version": "^1.1.1",
     "jasmine": "~2.1.1",
-    "shipit-deploy": "~1.1.0",
+    "jscs": "^3.0.3",
+    "jshint": "^2.9.2",
+    "nodemon": "^1.3.1",
     "shipit-cli": "~1.0.1",
-    "sqlite3": "~3.0.4"
+    "shipit-deploy": "~1.1.0",
+    "sqlite3": "~3.0.4",
+    "supertest": "^0.15.0"
   }
 }
