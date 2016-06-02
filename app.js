@@ -1,10 +1,10 @@
 var boot = require('./lib/boot');
 var express = require('express');
-var controllers = require('./app/controllers');
+var routes = require('./app/routes');
 
 boot.newApp()
   .withLogging()
-  .withControllers(controllers)
+  .withRoutes(routes)
   .withViewEngine()
   .withAssets()
   .withServer(3000)
