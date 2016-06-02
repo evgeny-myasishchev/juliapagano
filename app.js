@@ -7,8 +7,5 @@ boot.newApp()
   .withControllers(controllers)
   .withViewEngine()
   .withAssets()
-  .withDb()
-  .withReadModels()
-  .withPages(controllers.pagesController)
   .withServer(3000)
   .start(express());
