@@ -62,5 +62,5 @@
   "eqnull": true,
 
   // Per project stuff.
-  "jasmine": true
+  "mocha": true
 }

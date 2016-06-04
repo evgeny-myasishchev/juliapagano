@@ -6,8 +6,7 @@
   "scripts": {
     "check-node-version": "check-node-version --node `cat .nvmrc`",
     "pretest": "npm run check-node-version && npm run lint",
-    "test": "jasmine-node spec",
-    "test:autotest": "jasmine-node spec --autotest --watch .",
+    "test": "NODE_ENV=test mocha spec",
     "jscs": "jscs ./",
     "jshint": "jshint .",
     "lint": "npm run jshint && npm run jscs"
