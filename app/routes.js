@@ -2,9 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
+const pages = require('../lib/pages');
 
 router.get('/', function (req, res) {
-  res.render('pages/home');
+  res.render('pages/home', { currentPage: pages.home });
 });
 
 router.get('/about', function (req, res) {
@@ -23,8 +24,8 @@ router.get('/info-and-prices', function (req, res) {
   res.send('This is info and prices page');
 });
 
-router.get('/contact', function (req, res) {
-  res.send('This is contact page');
+router.get('/contacts', function (req, res) {
+  res.render('pages/contacts', { currentPage: pages.contacts });
 });
 
 module.exports = router;
