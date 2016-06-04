@@ -28,7 +28,7 @@
 							<ul class="nav navbar-nav">
 								{% for page in pages %}
 									<li {% if page == currentPage %} class="active" {% endif %}>
-										<a href="{{ page.path }}">{{ page.title }}</a>
+										<a href="{{ page.path }}">{{ page.name }}</a>
 									</li>
 								{% endfor %}
 							</ul>
