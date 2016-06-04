@@ -1,9 +1,11 @@
 'use strict';
 
+const sinon = require('sinon');
+
 const expressSpy = (function () {
   const fn = function (req, res, next) {
     fn.last = { req, res };
-    spyOn(res, 'render').and.callThrough();
+    sinon.spy(res, 'render');
     next();
   };
 
