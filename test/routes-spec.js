@@ -1,13 +1,13 @@
 'use strict';
 
-const boot = require('../lib/boot');
+const boot = require('../app/boot');
 const router = require('../app/routes');
 const request = require('supertest');
 const express = require('express');
 const expressSpy = require('./support/express-spy');
 const chai = require('chai');
 const expect = chai.expect;
-const pages = require('../lib/pages');
+const pages = require('../app/lib/pages');
 const sinon = require('sinon');
 
 chai.use(require('sinon-chai'));

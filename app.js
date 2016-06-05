@@ -1,4 +1,4 @@
-var boot = require('./lib/boot');
+var boot = require('./app/boot');
 var express = require('express');
 var routes = require('./app/routes');
 

@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const pages = require('../lib/pages');
+const pages = require('./lib/pages');
 
 router.get('/', function (req, res) {
   res.render('pages/home', { currentPage: pages.home });
