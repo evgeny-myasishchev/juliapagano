@@ -16,6 +16,7 @@
   "dependencies": {
     "async": "~0.9.0",
     "bluebird": "^2.9.34",
+    "config": "^1.21.0",
     "connect-assets": "^4.4.0",
     "ejs": "~2.2.2",
     "express": "^4.11.0",
