@@ -1,6 +1,6 @@
 module.exports = {
   logging: {
     stdout: false,
-    file: true
+    file: 'log/test.log'
   }
 };
