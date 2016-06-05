@@ -1,6 +1,11 @@
 module.exports = {
   logging: {
-    stdout: false,
-    file: 'log/test.log'
+    stdout: {
+      enabled: false
+    },
+    file: {
+      enabled: true,
+      path: 'log/test.log'
+    }
   }
 };

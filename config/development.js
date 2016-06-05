@@ -1,5 +1,8 @@
 module.exports = {
   logging: {
-    file: 'log/development.log'
+    file: {
+      enabled: true,
+      path: 'log/development.log'
+    }
   }
 };

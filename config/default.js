@@ -1,6 +1,12 @@
 module.exports = {
   logging: {
-    stdout: true,
-    file: false
+    name: 'juliapagano',
+    stdout: {
+      enabled: true,
+      level: 'debug'
+    },
+    file: {
+      enabled: false
+    }
   }
 };
