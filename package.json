@@ -32,6 +32,7 @@
     "jscs": "^3.0.3",
     "jshint": "^2.9.2",
     "mocha": "^2.5.3",
+    "nock": "^8.0.0",
     "shipit-cli": "~1.0.1",
     "shipit-deploy": "~1.1.0",
     "sinon": "^1.17.4",
