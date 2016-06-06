@@ -62,5 +62,8 @@
   "eqnull": true,
 
   // Per project stuff.
-  "mocha": true
+  "mocha": true,
+  "predef": [
+    "-Promise"
+  ]
 }
