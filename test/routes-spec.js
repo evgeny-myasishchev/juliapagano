@@ -9,10 +9,13 @@ const chai = require('chai');
 const expect = chai.expect;
 const pages = require('../app/lib/pages');
 const sinon = require('sinon');
+const photoset = require('../app/models/photoset');
+const Promise = require('bluebird');
 
 chai.use(require('sinon-chai'));
 
 describe('routes', function () {
+  const timestamp = new Date().getTime();
   let app;
   before(() => {
     app = express();
@@ -24,12 +27,40 @@ describe('routes', function () {
       .start(app);
   });
 
+  var sandbox;
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
   describe('GET /', function () {
-    it('should render home page', function (done) {
+
+    const dummyPhotoset = [
+      { photo1: timestamp + 100 },
+      { photo2: timestamp + 110 }
+    ];
+    beforeEach(() => {
+      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
+        expect(photosetId).to.eql(pages.home.carousel.photosetId);
+        return Promise.resolve(dummyPhotoset);
+      });
+    });
+    it('should render home page with data', function (done) {
       request(app).get('/').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/home', sinon.match({ currentPage: pages.home }));
+        expect(photoset.getPhotos).to.have.been.calledWith(pages.home.carousel.photosetId);
+        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/home',
+          sinon.match({ currentPage: pages.home, carouselPhotoset: dummyPhotoset }));
         done();
       });
+    });
+
+    it('should respond with error if failed to get photoset', function (done) {
+      photoset.getPhotos.restore();
+      sandbox.stub(photoset, 'getPhotos', () => Promise.reject('Unexpected error'));
+      request(app).get('/').expect(500, done);
     });
   });
 

@@ -8,6 +8,8 @@ const _ = require('lodash');
 const API_URL = 'https://api.flickr.com/services/rest';
 
 function callApi(options) {
+  if (!moduleCfg.apiKey) throw new Error('Flickr api key not configured');
+  if (!moduleCfg.userId) throw new Error('Flickr user id not configured');
   return new Promise(function (resolve, reject) {
       const opts = _.merge({
         qs: {
