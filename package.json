@@ -6,7 +6,7 @@
   "scripts": {
     "check-node-version": "check-node-version --node `cat .nvmrc`",
     "pretest": "npm run check-node-version && npm run lint",
-    "test": "NODE_ENV=test mocha spec",
+    "test": "NODE_ENV=test mocha --recursive",
     "jscs": "jscs ./",
     "jshint": "jshint .",
     "lint": "npm run jshint && npm run jscs"
@@ -22,7 +22,7 @@
     "connect-assets": "^4.4.0",
     "ejs": "~2.2.2",
     "express": "^4.11.0",
-    "lodash": "~3.0.1",
+    "lodash": "^4.13.1",
     "request": "^2.72.0",
     "swig": "^1.4.2"
   },
