@@ -59,8 +59,8 @@ describe('flickrClient', function () {
   });
 
   describe('photosGetSizes', function () {
-    const getSizesResponse = require('./mocks/flickrPhotosGetSizes');
     const photoId = 'photo-id-' + timestamp;
+    const getSizesResponse = require('./mocks/flickrPhotosGetSizes').create('fake-user-100', photoId);
     it('should GET flickr.photos.getSizes', function (done) {
       const apiCall = nock('https://api.flickr.com')
         .get('/services/rest')

@@ -1,42 +1,32 @@
+const timestamp = new Date().getTime();
+
 module.exports = {
   photoset: {
-    id: '72157669020760496',
-    primary: '26751996854',
-    owner: '143577525@N04',
-    ownername: 'evgmya',
+    id: 'photoset-id-' + timestamp,
+    primary: 'primary-' + timestamp,
+    owner: 'owner-' + timestamp,
+    ownername: 'owner-name-' + timestamp,
     photo: [
       {
-        id: '26751996854',
-        secret: '8c05e5e7c5',
-        server: '7347',
-        farm: 8,
-        title: '242',
-        isprimary: '1',
-        ispublic: 1,
-        isfriend: 0,
-        isfamily: 0
+        id: (timestamp + 100).toString(),
+        secret: 'secret-100-' + timestamp,
+        server: 'server-100' + timestamp,
+        farm: timestamp,
+        title: 'Title 100 ' + timestamp
       },
       {
-        id: '27288885371',
-        secret: '51df44f66a',
-        server: '7040',
-        farm: 8,
-        title: 'IMG_9453',
-        isprimary: '0',
-        ispublic: 1,
-        isfriend: 0,
-        isfamily: 0
+        id: (timestamp + 110).toString(),
+        secret: 'secret-110-' + timestamp,
+        server: 'server-110' + timestamp,
+        farm: timestamp,
+        title: 'Title 110 ' + timestamp
       },
       {
-        id: '27261651062',
-        secret: 'fcd9e915b9',
-        server: '7440',
-        farm: 8,
-        title: 'IMG_6750',
-        isprimary: '0',
-        ispublic: 1,
-        isfriend: 0,
-        isfamily: 0
+        id: (timestamp + 120).toString(),
+        secret: 'secret-120-' + timestamp,
+        server: 'server-120' + timestamp,
+        farm: timestamp,
+        title: 'Title 120 ' + timestamp
       }
     ],
     page: 1,
@@ -44,7 +34,7 @@ module.exports = {
     perpage: 500,
     pages: 1,
     total: '3',
-    title: 'Home Gallery'
+    title: 'Gallery name ' + timestamp
   },
   stat: 'ok'
 };
