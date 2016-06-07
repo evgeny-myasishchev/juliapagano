@@ -4,3 +4,4 @@ public/assets
 /log/*.log
 /tmp
 /db/*.sqlite*
+/config/local-*
