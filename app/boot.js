@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('config');
 const logger = require('./logging').getLogger();
 
 const BootApp = function () {
@@ -58,14 +59,7 @@ const BootApp = function () {
   });
 
   this.withAssets = defineStage(function (app) {
-    app.use(require('connect-assets')({
-      paths: [
-       __dirname + '/../app/assets/css',
-       __dirname + '/../app/assets/js',
-       __dirname + '/../vendor/assets',
-      ],
-      buildDir: '/public/assets',
-    }));
+    app.use(require('connect-assets')(config.assets));
   });
 
   this.withServer = defineStage(function (app, port) {
