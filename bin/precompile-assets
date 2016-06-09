@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const config = require('config');
+const connectAssets = require('connect-assets');
+const _ = require('lodash');
+
+const options = _.merge({}, config.assets, {
+  compile: true
+});
+connectAssets(options);
