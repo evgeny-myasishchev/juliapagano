@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+
+./bin/precompile-assets
+
+docker build -t evgenymyasishchev/juliapagano:${PACKAGE_VERSION} \
+  -t evgenymyasishchev/juliapagano:latest .
