@@ -9,5 +9,5 @@ boot.newApp()
   .withRoutes(routes)
   .withViewEngine()
   .withAssets()
-  .withServer(3000)
+  .withServer()
   .start(express());

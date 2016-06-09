@@ -62,10 +62,11 @@ const BootApp = function () {
     app.use(require('connect-assets')(config.assets));
   });
 
-  this.withServer = defineStage(function (app, port) {
-    var server = app.listen(port, function () {
-      var host = server.address().address;
-      var port = server.address().port;
+  this.withServer = defineStage(function (app) {
+    const port = config.port;
+    const server = app.listen(port, function () {
+      const host = server.address().address;
+      const port = server.address().port;
       logger.info('Application started in "%s" environment', app.get('env'));
       logger.info('Server listening at http://%s:%s', host, port);
     });
