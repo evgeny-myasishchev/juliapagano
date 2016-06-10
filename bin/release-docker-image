@@ -2,9 +2,60 @@
 
 set -e
 
+# The script is used as a travis deploy script
+
+# Initialize our own variables:
+publish_branch=""
+docker_email=""
+docker_user=""
+docker_password=""
+current_branch=`git rev-parse --abbrev-ref HEAD`
+
+while getopts "h?b:r:n:e:u:p:" opt; do
+    case "$opt" in
+    h|\?)
+        echo 'Showing help'
+        exit 0
+        ;;
+    b)  publish_branch=$OPTARG
+        ;;
+    r)  current_branch=$OPTARG
+        ;;
+    e)  docker_email=$OPTARG
+        ;;
+    u)  docker_user=$OPTARG
+        ;;
+    p)  docker_password=$OPTARG
+        ;;
+    esac
+done
+
+
+#Using project root as a working dir
+cd `dirname $0`/..
+
+: "${publish_branch:?-b <publish_branch> must be provided.}"
+: "${docker_email:?-e <docker-email> must be provided.}"
+: "${docker_user:?-u <docker-user> must be provided.}"
+: "${docker_password:?-p <docker-password> must be provided.}"
+
+if [ "${current_branch}" != "${publish_branch}" ]; then
+  echo "Current branch '${current_branch}'. Publish branch '${publish_branch}'. Publishing docker image skipped"
+  exit 0
+fi
+
 PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
+REPO_NAME=evgenymyasishchev/juliapagano
+
+docker -v
 
 ./bin/precompile-assets
 
-docker build -t evgenymyasishchev/juliapagano:${PACKAGE_VERSION} \
-  -t evgenymyasishchev/juliapagano:latest .
+echo "Building images: ${PACKAGE_VERSION} which is latest"
+docker build -t ${REPO_NAME}:${PACKAGE_VERSION} -t ${REPO_NAME}:latest .
+
+echo "Pushing latest image"
+docker push ${REPO_NAME}:latest
+
+echo "Pushing ${PACKAGE_VERSION} image"
+docker push ${REPO_NAME}:${PACKAGE_VERSION}
