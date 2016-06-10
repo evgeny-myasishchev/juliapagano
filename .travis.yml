@@ -3,4 +3,4 @@ services:
   - docker
 script:
   - npm test
-  - ./bin/release-docker-image -b release -r ${TRAVIS_BRANCH} -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+  - ./bin/release-docker-image -b ${RELEASE_BRANCH} -r ${TRAVIS_BRANCH} -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
