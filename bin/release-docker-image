@@ -51,11 +51,14 @@ docker -v
 
 ./bin/precompile-assets
 
-echo "Building image ${PACKAGE_VERSION} which is latest"
+echo "Building image ${REPO_NAME}:${PACKAGE_VERSION} which is latest"
 docker build -t ${REPO_NAME}:${PACKAGE_VERSION} -t ${REPO_NAME}:latest .
 
-echo "Building latest image"
+echo "Building ${REPO_NAME}:latest image"
 docker build -t ${REPO_NAME}:latest .
+
+echo "Docker login"
+docker login -e="$docker_email" -u="$docker_user" -p="$docker_password"
 
 echo "Pushing ${PACKAGE_VERSION} image"
 docker push ${REPO_NAME}:${PACKAGE_VERSION}
