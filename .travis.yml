@@ -1,1 +1,5 @@
 language: node_js
+services:
+  - docker
+after_success:
+- ./bin/release-docker-image -b release -r ${TRAVIS_BRANCH} -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
