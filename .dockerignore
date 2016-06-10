@@ -1,0 +1,22 @@
+# From .gitignore
+npm-debug.log
+node_modules
+# public/assets should not be ignored
+log/*.log
+tmp
+config/local-*
+
+# Additional ignores
+.dockerignore
+.editorconfig
+.git
+.gitignore
+.jscsrc
+.jshintignore
+.jshintrc
+.travis.yml
+Dockerfile
+nodemon.json
+shipitfile.js
+test
+test

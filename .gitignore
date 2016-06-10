@@ -1,3 +1,5 @@
+# Remember to make sure .dockerignore is in sync with this file
+
 npm-debug.log
 node_modules
 public/assets
