@@ -61,7 +61,7 @@ echo "Docker login"
 docker login -e="$docker_email" -u="$docker_user" -p="$docker_password"
 
 echo "Pushing ${REPO_NAME}:${PACKAGE_VERSION} image"
-docker push ${REPO_NAME}:"${PACKAGE_VERSION}"
+docker -l debug push ${REPO_NAME}:"${PACKAGE_VERSION}"
 
 echo "Pushing ${REPO_NAME}:latest image"
-docker push ${REPO_NAME}:latest
+docker -l debug push ${REPO_NAME}:latest
