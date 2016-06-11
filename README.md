@@ -16,7 +16,10 @@ Prepare file with env:
 FLICKR_API_KEY=TODO
 FLICKR_USER_ID=TODO
 
-docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod juliapagano
+Create and start docker container
+docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano
+
+Additionally restart policy like ```--restart=unless-stopped``` may need to be added.
 
 ## License
 
