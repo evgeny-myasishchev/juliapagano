@@ -66,4 +66,4 @@ echo "Pushing ${REPO_NAME}:latest image"
 docker -l debug push ${REPO_NAME}:latest
 
 echo "Pushing ${REPO_NAME}:${PACKAGE_VERSION} image"
-docker -l debug push ${REPO_NAME}:"${PACKAGE_VERSION}"
+docker -l debug push ${REPO_NAME}:"v${PACKAGE_VERSION}"
