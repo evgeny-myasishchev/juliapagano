@@ -2,7 +2,7 @@ module.exports = {
   home: {
     name: 'Home',
     path: '/',
-    carousel: { photosetId: '72157668428484680' }
+    carousel: { photosetId: '72157669540784146' }
   },
   about: { name: 'About', path: '/about' },
   portfolio: { name: 'Portfolio', path: '/portfolio' },
