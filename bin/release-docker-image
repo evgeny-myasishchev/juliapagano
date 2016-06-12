@@ -52,7 +52,7 @@ docker -v
 ./bin/precompile-assets
 
 echo "Building image ${REPO_NAME}:${PACKAGE_VERSION} which is latest"
-docker build -t ${REPO_NAME}:"${PACKAGE_VERSION}"
+docker build -t ${REPO_NAME}:"${PACKAGE_VERSION}" .
 
 echo "Building ${REPO_NAME}:latest image"
 docker build -t ${REPO_NAME}:latest .
