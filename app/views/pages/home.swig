@@ -1,6 +1,6 @@
 {% extends '../layouts/application.swig' %}
 
-{% block title %}{{currentPage.title}}{% endblock %}
+{% block title %}{{contentConfig.siteTitle}}{% endblock %}
 {% block container_classes %}marketing{% endblock %}
 {% block container %}
 <div class="jumbotron">

@@ -5,7 +5,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
-			{% block title %}Children and family photography in fife{% endblock %}
+		{% block title %}
+			{% if currentPage %}
+				{{currentPage.name}} - {{contentConfig.siteTitle}}
+			{% else %}
+				{{contentConfig.siteTitle}}
+			{% endif %}
+		{% endblock %}
 		</title>
 		{{css('vendor')}}
 		{{css('application')}}
@@ -22,7 +28,7 @@
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="/">Photographer in fife</a>
+							<a class="navbar-brand" href="/">{{contentConfig.siteTitle}}</a>
 						</div>
 						<div id="navbar" class="navbar-collapse collapse">
 							<ul class="nav navbar-nav">
@@ -41,7 +47,7 @@
 		<div class="container {% block container_classes %}{%endblock%}">
 			{% block container %}{%endblock%}
 				<footer class='footer'>
-					<p>&copy; Julia Pagano 2015</p>
+					<p>&copy; Julia Pagano 2016</p>
 				</footer>
 			</div>
 			{{js('vendor')}}
