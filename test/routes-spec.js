@@ -64,8 +64,17 @@ describe('routes', function () {
     });
   });
 
+  describe('GET /portfolio', function () {
+    it('should render portfolio page', function (done) {
+      request(app).get('/portfolio').expect(200, function () {
+        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/portfolio', sinon.match({ currentPage: pages.portfolio }));
+        done();
+      });
+    });
+  });
+
   describe('GET /contacts', function () {
-    it('should render home page', function (done) {
+    it('should render contacts page', function (done) {
       request(app).get('/contacts').expect(200, function () {
         expect(expressSpy.last.res.render).to.have.been.calledWith('pages/contacts', sinon.match({ currentPage: pages.contacts }));
         done();

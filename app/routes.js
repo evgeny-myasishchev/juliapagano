@@ -21,7 +21,7 @@ router.get('/about', function (req, res) {
 });
 
 router.get('/portfolio', function (req, res) {
-  res.send('This is portfolio page');
+  res.render('pages/portfolio', { currentPage: pages.portfolio });
 });
 
 router.get('/kind-words', function (req, res) {
