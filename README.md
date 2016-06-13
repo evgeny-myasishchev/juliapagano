@@ -13,6 +13,7 @@ docker build -t juliapagano .
 ## Run image
 
 Prepare file with env:
+NODE_ENV=production|staging
 FLICKR_API_KEY=TODO
 FLICKR_USER_ID=TODO
 

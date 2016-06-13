@@ -2,15 +2,16 @@
 module.exports = function (shipit) {
   shipit.initConfig({
     default: {
-      workspace: './juliapagano',
       servers: process.env.USER + '@hbox',
       dockerRepository: 'evgenymyasishchev/juliapagano'
     },
     production: {
+      workspace: './juliapagano/prod',
       container: 'juliapagano-prod',
       port: 6000
     },
     staging: {
+      workspace: './juliapagano/stage',
       container: 'juliapagano-stage',
       port: 6010
     }
@@ -18,7 +19,7 @@ module.exports = function (shipit) {
 
   // Perform new deployment
   shipit.task('deploy:cold', function () {
-    const envFile = this.config.workspace + '/.env';
+    const envFile = this.config.workspace + '/app.env';
     const port = this.config.port;
     const repo = this.config.dockerRepository;
     const container = this.config.container;
