@@ -15,6 +15,10 @@ module.exports = {
     userId: process.env.FLICKR_USER_ID
   },
 
+  content: {
+    siteTitle: 'Photographer in fife'
+  },
+
   logging: {
     name: 'juliapagano',
     stdout: {

@@ -52,7 +52,8 @@ const BootApp = function () {
     swig.setDefaults({
       cache: false,
       locals: {
-        pages: pages
+        pages: pages,
+        contentConfig: config.content
       },
     });
     app.set('view cache', false);
