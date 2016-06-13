@@ -45,7 +45,7 @@
 		</div>
 
 		<div class="container {% block container_classes %}{%endblock%}">
-			{% block container %}{%endblock%}
+			{% block container %}<h2>{{currentPage.name}} - Under Construction</h2>{%endblock%}
 				<footer class='footer'>
 					<p>&copy; Julia Pagano 2016</p>
 				</footer>

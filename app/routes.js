@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/about', function (req, res) {
-  res.send('This is about page');
+  res.render('pages/about', { currentPage: pages.about });
 });
 
 router.get('/portfolio', function (req, res) {
@@ -25,11 +25,11 @@ router.get('/portfolio', function (req, res) {
 });
 
 router.get('/kind-words', function (req, res) {
-  res.send('This is kind-words page');
+  res.render('pages/kind-words', { currentPage: pages['kind-words'] });
 });
 
 router.get('/info-and-prices', function (req, res) {
-  res.send('This is info and prices page');
+  res.render('pages/info-and-prices', { currentPage: pages['info-and-prices'] });
 });
 
 router.get('/contacts', function (req, res) {

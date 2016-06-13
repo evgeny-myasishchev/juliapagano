@@ -64,10 +64,37 @@ describe('routes', function () {
     });
   });
 
+  describe('GET /about', function () {
+    it('should render about page', function (done) {
+      request(app).get('/about').expect(200, function () {
+        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/about', sinon.match({ currentPage: pages.about }));
+        done();
+      });
+    });
+  });
+
   describe('GET /portfolio', function () {
     it('should render portfolio page', function (done) {
       request(app).get('/portfolio').expect(200, function () {
         expect(expressSpy.last.res.render).to.have.been.calledWith('pages/portfolio', sinon.match({ currentPage: pages.portfolio }));
+        done();
+      });
+    });
+  });
+
+  describe('GET /kind-words', function () {
+    it('should render kind-words page', function (done) {
+      request(app).get('/kind-words').expect(200, function () {
+        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/kind-words', sinon.match({ currentPage: pages['kind-words'] }));
+        done();
+      });
+    });
+  });
+
+  describe('GET /info-and-prices', function () {
+    it('should render info-and-prices page', function (done) {
+      request(app).get('/info-and-prices').expect(200, function () {
+        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/info-and-prices', sinon.match({ currentPage: pages['info-and-prices'] }));
         done();
       });
     });
