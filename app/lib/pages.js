@@ -5,7 +5,11 @@ module.exports = {
     carousel: { photosetId: '72157669540784146' }
   },
   about: { name: 'About', path: '/about' },
-  portfolio: { name: 'Portfolio', path: '/portfolio' },
+  portfolio: {
+    name: 'Portfolio',
+    path: '/portfolio',
+    gallery: { photosetId: '72157667031701733' }
+  },
   'kind-words': { name: 'Kind Words', path: '/kind-words' },
   'info-and-prices': { name: 'Info and Prices', path: '/info-and-prices' },
   blog: { name: 'Blog', path: 'http://juliapagano.blogspot.co.uk/' },

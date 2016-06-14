@@ -48,6 +48,7 @@ describe('routes', function () {
         return Promise.resolve(dummyPhotoset);
       });
     });
+
     it('should render home page with data', function (done) {
       request(app).get('/').expect(200, function () {
         expect(photoset.getPhotos).to.have.been.calledWith(pages.home.carousel.photosetId);
@@ -74,9 +75,23 @@ describe('routes', function () {
   });
 
   describe('GET /portfolio', function () {
-    it('should render portfolio page', function (done) {
+    const dummyPhotoset = [
+      { photo1: timestamp + 100 },
+      { photo2: timestamp + 110 }
+    ];
+    beforeEach(() => {
+      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
+        expect(photosetId).to.eql(pages.portfolio.gallery.photosetId);
+        return Promise.resolve(dummyPhotoset);
+      });
+    });
+
+    it('should render portfolio page with portfolio photoset', function (done) {
       request(app).get('/portfolio').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/portfolio', sinon.match({ currentPage: pages.portfolio }));
+        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/portfolio', sinon.match({
+          currentPage: pages.portfolio,
+          galleryPhotoset: dummyPhotoset
+        }));
         done();
       });
     });

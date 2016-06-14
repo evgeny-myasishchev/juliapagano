@@ -21,7 +21,14 @@ router.get('/about', function (req, res) {
 });
 
 router.get('/portfolio', function (req, res) {
-  res.render('pages/portfolio', { currentPage: pages.portfolio });
+  photoset.getPhotos(pages.portfolio.gallery.photosetId)
+    .then(function (photoset) {
+      res.render('pages/portfolio', { currentPage: pages.portfolio, galleryPhotoset: photoset });
+    })
+    .catch(function (err) {
+      req.log.error('Failed to get photos.', err);
+      res.sendStatus(500);
+    });
 });
 
 router.get('/kind-words', function (req, res) {
