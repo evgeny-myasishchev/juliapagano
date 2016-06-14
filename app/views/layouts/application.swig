@@ -52,5 +52,6 @@
 			</div>
 			{{js('vendor')}}
 			{{js('application')}}
+			{% block bottomScripts %}{%endblock%}
 		</body>
 	</html>
