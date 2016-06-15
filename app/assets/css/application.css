@@ -4,3 +4,12 @@
 	padding-bottom: 40px;
 	padding-top: 40px;
 }
+
+.marketing .jumbotron {
+	padding-top: 20px;
+}
+
+.marketing .jumbotron #slogan {
+	display: block;
+	padding-top: 10px;
+}

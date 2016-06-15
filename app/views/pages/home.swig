@@ -4,8 +4,10 @@
 {% block container_classes %}marketing{% endblock %}
 {% block container %}
 <div class="jumbotron">
-	<h1>Children and family photographer</h1>
-	<p>I am Julia, I am a mum and a child photographer based in <a href='https://goo.gl/maps/8KZv6'><strong>St Andrews, Scotland</strong></a>. Thanks for stopping by.</p>
+	<h1>
+		Julia Pagano Photography
+		<small id='slogan'>Real moments. Priceless memories.</small>
+	</h1>
 	<div data-ride="carousel"  class="carousel slide" id="home-screen-carousel">
 		<ol class="carousel-indicators">
 			{% for photo in carouselPhotoset.items %}
@@ -31,21 +33,9 @@
 </div>
 
 <div class="row">
-	<div class="col-md-4">
-		<h2>Portrait session - £20</h2>
-		<p>What is included: pre-session consultation, 30 min shoot at your home or location of your choice, editing your images and providing private online gallery with 10-15 portraits to chose from.</p>
-		<p><a role="button" href="#" class="btn btn-primary">View samples &raquo;</a></p>
-	</div>
-	<div class="col-md-4">
-		<h2>Lifestyle session - £50</h2>
-		<p>What is included: pre-session consultation, 2 hour shoot at your home or location of your choice, editing your images and providing private online gallery with 30-50 pictures to chose from.</p>
-		<p><a role="button" href="#" class="btn btn-primary">View samples &raquo;</a></p>
-	</div>
-	<div class="col-md-4">
-		<h2>Additional services</h2>
-		<p>Prints prices - from £5, digital images from £10, digital collections from £50.</p>
-		<p>I also make story boards and photo books.</p>
-		<p><a role="button" href="#" class="btn btn-primary">View samples &raquo;</a></p>
+	<div class="col-sm-6">
+	<p>Hello! I am Julia.</p>
+	<p>I am lifestyle portrait photographer specializing on children and family photography. I am based in  <a href='https://goo.gl/maps/8KZv6'>St Andrews, Fife</a>. Take a look <a href='/portfolio'>around</a> to see more of my work, and if it feels right - <a href="/contacts">do get in touch</a>. I'd be happy to capture your family, children and special moments for you to remember.</p>
 	</div>
 </div>
 
