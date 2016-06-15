@@ -4,7 +4,7 @@
     {% for photo in galleryPhotoset.items %}
     <div class="col-lg-6 col-md-6 col-xs-12 thumb" >
         <a data-lightbox="roadtrip" href="{{photo.sizes['Original'].source}}" class="thumbnail" title="{{photo.title}}">
-            <img style='width: 240px; height: 171px;' src="{{photo.sizes['Medium'].source}}" alt="{{photo.title}}" class="img-responsive">
+            <img style='width: 500px; height: 357px;' src="{{photo.sizes['Medium'].source}}" alt="{{photo.title}}" class="img-responsive">
         </a>
     </div>
     {% endfor %}
