@@ -2,7 +2,7 @@
 {% block container %}
   <h1 class='page-header'>{{currentPage.name}}</h1>
   <div class="row">
-    <div class="col-sm-6 col-md-8">
+    <div class="col-sm-6 col-md-6">
       <p>
         Hello! I am Julia.
       </p>
@@ -13,9 +13,9 @@
       When not photographing, I like to read, cook, bake, and enjoy outdoors with my kids. Take a <a href="/portfolio">look around</a> to see more of my work, and if it feels right - <a href="/contacts">do get in touch</a>. I'd be happy to capture your family, children and special moments for you to remember.
       </p>
     </div>
-    <div class="col-sm-6 col-md-4">
+    <div class="col-sm-6 col-md-6">
       <div class="thumbnail">
-        <img alt="Julia Pagano" data-src="holder.js/350x500">
+        <img alt="Julia Pagano" src="{{selfie.sizes['Medium'].source}}">
       </div>
     </div>
   </div>
