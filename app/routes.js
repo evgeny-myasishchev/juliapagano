@@ -17,7 +17,17 @@ router.get('/', function (req, res) {
 });
 
 router.get('/about', function (req, res) {
-  res.render('pages/about', { currentPage: pages.about });
+  photoset.getPhotos(pages.about.selfie.photosetId)
+    .then(function (photoset) {
+      res.render('pages/about', {
+        currentPage: pages.about,
+        selfie: photoset.items[0]
+      });
+    })
+    .catch(function (err) {
+      req.log.error('Failed to get photos.', err);
+      res.sendStatus(500);
+    });
 });
 
 router.get('/portfolio', function (req, res) {

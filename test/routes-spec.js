@@ -66,11 +66,29 @@ describe('routes', function () {
   });
 
   describe('GET /about', function () {
-    it('should render about page', function (done) {
-      request(app).get('/about').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/about', sinon.match({ currentPage: pages.about }));
-        done();
+    const dummySelfiePhotoset = {
+      items: [
+        { photo1: timestamp + 100 },
+        { photo2: timestamp + 110 }
+      ]
+    };
+    beforeEach(() => {
+      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
+        expect(photosetId).to.eql(pages.about.selfie.photosetId);
+        return Promise.resolve(dummySelfiePhotoset);
       });
+    });
+
+    it('should render about page', function (done) {
+      request(app).get('/about')
+        .expect(200)
+        .expect(function () {
+          expect(expressSpy.last.res.render).to.have.been.calledWith('pages/about', sinon.match({
+            currentPage: pages.about,
+            selfie: dummySelfiePhotoset.items[0]
+          }));
+        })
+        .end(done);
     });
   });
 
