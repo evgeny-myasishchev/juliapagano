@@ -68,7 +68,7 @@ describe('routes', function () {
   describe('GET /about', function () {
     const dummySelfiePhotoset = {
       items: [
-        { photo1: timestamp + 100 },
+        { photo1: timestamp + 100, sizes: { Medium: { source: 'fake' } } },
         { photo2: timestamp + 110 }
       ]
     };
