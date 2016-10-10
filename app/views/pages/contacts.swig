@@ -22,10 +22,6 @@
             <label>Email</label>
             <input class="form-control" placeholder="Please provide your email" type="email">
           </div>
-          <div class="form-group">
-            <label>Phone number</label>
-            <input class="form-control" placeholder="Please provide your phone number" type="text">
-          </div>
         </div>
       </div>
       <div class="form-group">
@@ -41,7 +37,7 @@
     </form>
   </fieldset>
 
-  You can reach me on Facebook: <a href='https://facebook.com/juliapaganophotography'>facebook.com/juliapaganophotography</a>
+  You can also reach me on Facebook: <a href='https://facebook.com/juliapaganophotography'>facebook.com/juliapaganophotography</a>
   or on Instagram: <a href="https://www.instagram.com/yuliapagano/">@yuliapagano</a>
   or directly by email: <a href='mailto:&#105;&#110;&#102;&#111;&#064;&#106;&#117;&#108;&#105;&#097;&#112;&#097;&#103;&#097;&#110;&#111;&#046;&#099;&#111;&#046;&#117;&#107;'>&#105;&#110;&#102;&#111;&#064;&#106;&#117;&#108;&#105;&#097;&#112;&#097;&#103;&#097;&#110;&#111;&#046;&#099;&#111;&#046;&#117;&#107;</a>
 {% endblock %}
