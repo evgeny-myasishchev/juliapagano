@@ -10,7 +10,7 @@
   ] %}
   <blockquote>
     <p>{{kindWord.text}}</p>
-    <footer><cite title="Source Title">{{kindWord.name}}</cite></footer>
+    <footer><cite>{{kindWord.name}}</cite></footer>
   </blockquote>
     {{kindWord.key}}
   {% endfor %}
