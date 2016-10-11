@@ -28,5 +28,10 @@ module.exports = {
     file: {
       enabled: false
     }
+  },
+
+  cache: {
+    maxItems: 100,
+    maxAgeMs: 30 * 60 * 1000 //30 minutes
   }
 };
