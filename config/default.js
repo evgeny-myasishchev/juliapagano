@@ -33,5 +33,14 @@ module.exports = {
   cache: {
     maxItems: 100,
     maxAgeMs: 30 * 60 * 1000 //30 minutes
+  },
+
+  emailProvider: {
+    mailgun: {
+      baseUrl: 'https://api.mailgun.net/v3',
+      user: 'api',
+      domain: process.env.MAILGUN_MAIL_DOMAIN,
+      key: process.env.MAILGUN_API_KEY
+    }
   }
 };

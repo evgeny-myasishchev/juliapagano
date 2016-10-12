@@ -16,6 +16,8 @@ Prepare file with env:
 NODE_ENV=production|staging
 FLICKR_API_KEY=TODO
 FLICKR_USER_ID=TODO
+MAILGUN_API_KEY=TODO
+MAILGUN_MAIL_DOMAIN=TODO
 
 Create and start docker container
 docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano
