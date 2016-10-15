@@ -7,19 +7,20 @@ const request = require('request-promise');
 const logger = logging.getLogger();
 const mailgunCfg = config.get('emailProvider.mailgun');
 
-function sendEmail(params) {
+function *sendEmail(params) {
   const url = [mailgunCfg.baseUrl, mailgunCfg.domain, 'messages'].join('/');
-  const { from, to, subject, text, html } = params;
-  const log = logger.child({ url, from, to, subject });
+  const { from, to, template } = params;
+  const log = logger.child({ url, from, to });
   log.debug('Sending email');
+  const data = yield template.render();
   return request.post({
     url: url,
     form: {
       from: from,
       to: to,
-      subject: subject,
-      text: text,
-      html: html
+      subject: data.subject,
+      text: data.text,
+      html: data.html
     }
   })
   .auth(mailgunCfg.user, mailgunCfg.key)
