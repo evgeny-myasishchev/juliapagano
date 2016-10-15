@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   flickrClient: {
     apiKey: 'dummy-api-key-' + new Date().getTime(),
@@ -12,5 +14,9 @@ module.exports = {
       enabled: true,
       path: 'log/test.log'
     }
-  }
+  },
+
+  EmailTemplate: {
+    baseDir: path.join('test', 'mocks', 'emailTemplates')
+  },
 };
