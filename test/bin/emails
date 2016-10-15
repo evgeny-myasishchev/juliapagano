@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const EmailTemplate = require('../../app/lib/EmailTemplate');
+const path = require('path');
+const program = require('commander');
+
+program
+  .command('render <name> <payloadPath>')
+  .description('Render given template with provided payload ')
+  .action(function (name, payloadPath) {
+    const template = new EmailTemplate(name, require(path.join(process.cwd(), payloadPath)));
+    template.render()
+      .then((result) => {
+        console.log(`=== Subject:\n${result.subject}\n===`);
+        console.log(`=== Text:\n${result.text}\n===`);
+        console.log(`=== Html:\n${result.html}\n===`);
+      })
+      .catch((e) => {
+        console.log(e.stack);
+        throw e;
+      });
+  });
+
+program
+  .command('*')
+  .action(function () {
+    program.outputHelp();
+    process.exit(1);
+  });
+
+program.parse(process.argv);
+
+if (program.args.length === 0) {
+  program.outputHelp();
+  process.exit(1);
+}

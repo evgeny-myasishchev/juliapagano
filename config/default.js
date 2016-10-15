@@ -38,7 +38,7 @@ module.exports = {
   },
 
   EmailTemplate: {
-    baseDir: path.join('app', 'views', 'emailTemplates')
+    baseDir: path.join('app', 'views', 'mail')
   },
 
   emailProvider: {
