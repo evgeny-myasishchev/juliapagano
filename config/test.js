@@ -21,6 +21,10 @@ module.exports = {
     baseDir: path.join('test', 'mocks', 'emailTemplates')
   },
 
+  contacts: {
+    sendTo: chance.email()
+  },
+
   emailProvider: {
     mailgun: {
       baseUrl: chance.url(),
