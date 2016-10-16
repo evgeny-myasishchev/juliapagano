@@ -2,26 +2,55 @@
 
 'use strict';
 
+const co = require('co');
+const config = require('config');
+const emailProvider = require('../../app/lib/emailProvider');
 const EmailTemplate = require('../../app/lib/EmailTemplate');
 const path = require('path');
 const program = require('commander');
 
+function invoke(generator) {
+  return function () {
+    return co.wrap(generator).apply(null, arguments).catch((e) => {
+      console.error(e.stack);
+      process.exit(1);
+    });
+  };
+}
+
+program.usage(`render contacts test/mocks/emails/contactsPayload.js
+         emails deliver contacts test/mocks/emails/contactsPayload.js
+  `);
+
 program
   .command('render <name> <payloadPath>')
   .description('Render given template with provided payload ')
-  .action(function (name, payloadPath) {
+  .action(invoke(function * (name, payloadPath) {
     const template = new EmailTemplate(name, require(path.join(process.cwd(), payloadPath)));
-    template.render()
-      .then((result) => {
-        console.log(`=== Subject:\n${result.subject}\n===`);
-        console.log(`=== Text:\n${result.text}\n===`);
-        console.log(`=== Html:\n${result.html}\n===`);
-      })
-      .catch((e) => {
-        console.log(e.stack);
-        throw e;
-      });
-  });
+    const result = yield template.render();
+    console.log(`=== Subject:`);
+    console.log(result.subject);
+    console.log(`=== Text:`);
+    console.log(result.text);
+    console.log(`=== Html:`);
+    console.log(result.html);
+    console.log('===');
+  }));
+
+program
+  .command('deliver <name> <payloadPath>')
+  .description('Deliver given template with provided payload ')
+  .action(invoke(function * (name, payloadPath) {
+    const payload = require(path.join(process.cwd(), payloadPath));
+    console.log('==hello==');
+    const template = new EmailTemplate(name, payload);
+    yield emailProvider.sendEmail({
+      from: payload.email,
+      to: config.get('contacts.sendTo'),
+      template
+    });
+    console.log('Message sent');
+  }));
 
 program
   .command('*')

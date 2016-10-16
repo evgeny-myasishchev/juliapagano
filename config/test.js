@@ -1,4 +1,5 @@
 const path = require('path');
+const chance = require('../test/mocks/chance');
 
 module.exports = {
   flickrClient: {
@@ -19,4 +20,13 @@ module.exports = {
   EmailTemplate: {
     baseDir: path.join('test', 'mocks', 'emailTemplates')
   },
+
+  emailProvider: {
+    mailgun: {
+      baseUrl: chance.url(),
+      user: `mg-user-${chance.word()}`,
+      domain: chance.domain(),
+      key: `key-${chance.word({ length: 10 })}`
+    }
+  }
 };

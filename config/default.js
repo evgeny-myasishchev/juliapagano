@@ -41,6 +41,10 @@ module.exports = {
     baseDir: path.join('app', 'views', 'mail')
   },
 
+  contacts: {
+    sendTo: process.env.CONTACTS_SEND_TO
+  },
+
   emailProvider: {
     mailgun: {
       baseUrl: 'https://api.mailgun.net/v3',

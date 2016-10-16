@@ -18,6 +18,7 @@ FLICKR_API_KEY=TODO
 FLICKR_USER_ID=TODO
 MAILGUN_API_KEY=TODO
 MAILGUN_MAIL_DOMAIN=TODO
+CONTACTS_SEND_TO=Email to send contacts form messages
 
 Create and start docker container
 docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano
