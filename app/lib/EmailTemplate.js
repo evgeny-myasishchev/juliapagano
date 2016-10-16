@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const config = require('config');
 const ET = require('email-templates').EmailTemplate;
 const path = require('path');
@@ -11,6 +12,14 @@ class EmailTemplate {
   constructor(path, data) {
     this._path = path;
     this._data = data;
+  }
+
+  get path() {
+    return this._path;
+  }
+
+  get data() {
+    return _.cloneDeep(this._data);
   }
 
   //Returns object like this { text, html }

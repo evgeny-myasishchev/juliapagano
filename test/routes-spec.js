@@ -1,18 +1,21 @@
 'use strict';
 
 const boot = require('../app/boot');
-const router = require('../app/routes');
-const request = require('supertest');
+const chai = require('chai');
+const chance = require('./mocks/chance');
+const co = require('co');
+const config = require('config');
+const emailProvider = require('../app/lib/emailProvider');
 const express = require('express');
 const expressSpy = require('./support/express-spy');
-const chai = require('chai');
-const expect = chai.expect;
 const pages = require('../app/lib/pages');
-const sinon = require('sinon');
 const photoset = require('../app/models/photoset');
 const Promise = require('bluebird');
+const request = require('supertest-as-promised');
+const router = require('../app/routes');
+const sinon = require('sinon');
 
-chai.use(require('sinon-chai'));
+const expect = chai.expect;
 
 describe('routes', function () {
   const timestamp = new Date().getTime();
@@ -27,10 +30,7 @@ describe('routes', function () {
       .start(app);
   });
 
-  var sandbox;
-  beforeEach(() => {
-    sandbox = sinon.sandbox.create();
-  });
+  const sandbox = sinon.sandbox.create();
 
   afterEach(() => {
     sandbox.restore();
@@ -134,11 +134,42 @@ describe('routes', function () {
   });
 
   describe('GET /contacts', function () {
-    it('should render contacts page', function (done) {
-      request(app).get('/contacts').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/contacts', sinon.match({ currentPage: pages.contacts }));
-        done();
-      });
+    it('should render contacts page', function () {
+      return request(app).get('/contacts').expect(200)
+        .then(() => {
+          expect(expressSpy.last.res.render).to.have.been.calledWith('pages/contacts', sinon.match({ currentPage: pages.contacts }));
+        });
     });
+  });
+
+  describe('POST /contacts', function () {
+    let sendEmailStub;
+    beforeEach(() => {
+      sendEmailStub = sandbox.stub(emailProvider, 'sendEmail').resolves({});
+    });
+
+    it('should send contacts and thanks emails', co.wrap(function * () {
+      const payload = chance.contactsRequestPayload();
+      yield request(app).post('/contacts').send(payload).expect(200);
+      expect(sendEmailStub).to.have.callCount(2);
+      expect(sendEmailStub).to.have.been.calledWith(sinon.match({
+        from: payload.email,
+        to: config.get('contacts.sendTo'),
+        template: sinon.match((template) => {
+          expect(template.path).to.eql('contacts');
+          expect(template.data).to.eql(payload);
+          return true;
+        })
+      }));
+      expect(sendEmailStub).to.have.been.calledWith(sinon.match({
+        from: config.get('contacts.sendTo'),
+        to: payload.email,
+        template: sinon.match((template) => {
+          expect(template.path).to.eql('contactsThanks');
+          expect(template.data).to.eql(payload);
+          return true;
+        })
+      }));
+    }));
   });
 });

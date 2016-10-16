@@ -10,7 +10,7 @@ const mailgunCfg = config.get('emailProvider.mailgun');
 function *sendEmail(params) {
   const url = [mailgunCfg.baseUrl, mailgunCfg.domain, 'messages'].join('/');
   const { from, to, template } = params;
-  const log = logger.child({ url, from, to });
+  const log = logger.child({ url, from, to, template: template.path });
   log.debug('Sending email');
   const data = yield template.render();
   return request.post({
