@@ -18,6 +18,8 @@ const sinon = require('sinon');
 const expect = chai.expect;
 
 describe('routes', function () {
+  global.loggingHookup();
+
   const timestamp = new Date().getTime();
   let app;
   before(() => {
@@ -144,12 +146,13 @@ describe('routes', function () {
 
   describe('POST /contacts', function () {
     let sendEmailStub;
+    let payload;
     beforeEach(() => {
+      payload = chance.contactsRequestPayload();
       sendEmailStub = sandbox.stub(emailProvider, 'sendEmail').resolves({});
     });
 
     it('should send contacts and thanks emails', co.wrap(function * () {
-      const payload = chance.contactsRequestPayload();
       yield request(app).post('/contacts').send(payload).expect(200);
       expect(sendEmailStub).to.have.callCount(2);
       expect(sendEmailStub).to.have.been.calledWith(sinon.match({
@@ -171,5 +174,11 @@ describe('routes', function () {
         })
       }));
     }));
+
+    it('should respond with 400 error if body schema validation fails', function () {
+      delete payload.name;
+      delete payload.email;
+      return request(app).post('/contacts').send(payload).expect(400, /required property 'name'/);
+    });
   });
 });

@@ -7,8 +7,11 @@ const EmailTemplate = require('./lib/EmailTemplate');
 const express = require('express');
 const pages = require('./lib/pages');
 const photoset = require('./models/photoset');
+const schema = require('./lib/schema');
 
 const router = express.Router();
+
+schema.add(require('./schema/contactRequest'), 'contactRequest');
 
 function invoke(generator) {
   return function (req, res) {
@@ -68,7 +71,7 @@ router.get('/contacts', function (req, res) {
   res.render('pages/contacts', { currentPage: pages.contacts });
 });
 
-router.post('/contacts', invoke(function * (req, res) {
+router.post('/contacts', schema.validateRequest('contactRequest'), invoke(function * (req, res) {
   yield emailProvider.sendEmail({
     from: req.body.email,
     to: config.get('contacts.sendTo'),
