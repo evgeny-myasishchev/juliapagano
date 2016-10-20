@@ -79,19 +79,19 @@
       }
 
       const sendButton = $('#submit')
-      const container = $('#contacts-container');
       const form = $('#contacts');
       const shotType = $('[name=shotType]');
       const message = $('[name=message]');
       
       $('#send-another').on('click', function() {
+        sendButton.button('reset');
         form.removeClass('message-sent');
-        container.attr('disabled', false);
         shotType.val('');
         message.val('');
       });
 
       $('#try-again').on('click', function() {
+        sendButton.button('reset');
         form.removeClass('message-sending-failed');
         form.submit();
       });
@@ -119,9 +119,6 @@
             type : 'POST',
             url : '/contacts',
             data : $(this).serialize()
-          })
-          .always(function() {
-            sendButton.button('reset');
           })
           .done(function() {
             form.addClass('message-sent');
