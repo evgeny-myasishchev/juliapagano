@@ -1,9 +1,9 @@
 {% extends '../layouts/application.swig' %}
 {% block container %}
   <h1 class='page-header'>{{currentPage.name}}</h1>
-  <fieldset>
-    <legend>I would love to hear from you.</legend>
-    <form id='contacts' class="" action="index.html" method="post">
+  <form id='contacts' action="index.html" method="post">
+    <fieldset id='contacts-container'>
+      <legend>I would love to hear from you.</legend>
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
@@ -33,11 +33,25 @@
           Tell me more about the kind of photos you are looking for. For family session, please send more details about your family, whether you’d like at home or an outdoor shooting (or both), if there is special occasion or activity you’d like photographed.
         </span>
       </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+    <div class="form-group">
+      <button autocomplete='off' id="submit" type="submit" class="btn btn-primary" data-loading-text="Sending...">Send</button>
+      <div class="success-container alert alert-success">
+        <h4>Your message has been sent successfully!</h4>
+        <p>Thank you for you message. I will get back to you shortly.</p>
+        <p>
+          <button autocomplete='off' id="send-another" type="button" class="btn btn-success">Send another message</button>
+        </p>
       </div>
-    </form>
-  </fieldset>
+      <div class="failure-container alert alert-danger">
+        <h4>Your message has not been sent!</h4>
+        <p>I am sorry but your message has not been sent this time. Please try again.</p>
+        <p>
+          <button autocomplete='off' id="try-again" type="button" class="btn btn-danger">Try again now</button>
+        </p>
+      </div>
+    </div>
+  </form>
 
   You can also reach me on Facebook: <a href='https://facebook.com/juliapaganophotography'>facebook.com/juliapaganophotography</a>
   or on Instagram: <a href="https://www.instagram.com/yuliapagano/">@yuliapagano</a>
@@ -55,11 +69,25 @@
     }
     
     !function($) {
+      const sendButton = $('#submit')
+      const container = $('#contacts-container');
+      const form = $('#contacts');
+      
+      $('#send-another').on('click', function() {
+        form.removeClass('message-sent');
+        container.attr('disabled', false);
+        $('[name=shotType]').val('');
+        $('[name=message]').val('');
+      });
+
+      $('#try-again').on('click', function() {
+        form.removeClass('message-sending-failed');
+        form.submit();
+      });
+      
       $(function() {
         $('#contacts').submit(function(event) {
           event.preventDefault();
-          
-          const form = $(this);
           const required = form.find('[data-required]');
           let isValid = false;
           required.each(function(index, el) {
@@ -70,16 +98,21 @@
             toggleValidState(el, target.val());
           });
           
+          sendButton.button('loading');
+          
           $.ajax({
             type : 'POST',
             url : '/contacts',
             data : $(this).serialize()
           })
+          .always(function() {
+            sendButton.button('reset');
+          })
           .done(function() {
-            console.log('email sent');
+            form.addClass('message-sent');
           })
           .fail(function() {
-            console.log('Failed to send email.');
+            form.addClass('message-sending-failed');
           });
         })
       });
