@@ -13,3 +13,11 @@
 	display: block;
 	padding-top: 10px;
 }
+
+.validation-message {
+  display: none;
+}
+
+.has-error .validation-message {
+  display: initial;
+}
