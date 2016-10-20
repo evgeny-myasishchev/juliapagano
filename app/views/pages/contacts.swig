@@ -13,6 +13,7 @@
               <option>portrait session</option>
               <option>baby or family session</option>
             </select>
+            <span class="help-block validation-message">Please select shoot type or please provide additional details</span>
           </div>
           <div class="form-group" data-required='name'>
             <label class="control-label">Name</label>
@@ -29,9 +30,10 @@
       <div class="form-group">
         <label class="control-label">Additional details</label>
         <textarea class="form-control" rows="3" name="message"></textarea>
-        <span class="help-block">
+        <span class="help-block error-hidden">
           Tell me more about the kind of photos you are looking for. For family session, please send more details about your family, whether you’d like at home or an outdoor shooting (or both), if there is special occasion or activity you’d like photographed.
         </span>
+        <span class="help-block validation-message">Please select shoot type or please provide additional details</span>
       </div>
     </fieldset>
     <div class="form-group">
@@ -60,24 +62,33 @@
 
 {% block bottomScripts %}
   <script>
-    function toggleValidState(el, isValid) {
-      if(isValid) {
-        el.removeClass('has-error');
-      } else {
-        el.addClass('has-error');
-      }
-    }
-    
     !function($) {
+      function toggleValidState(el, isValid) {
+        if(isValid) {
+          el.removeClass('has-error');
+        } else {
+          el.addClass('has-error');
+        }
+      }
+      
+      function validateShotType() {
+        const isValid = shotType.val() || message.val();
+        toggleValidState(shotType.parent('.form-group'), isValid);
+        toggleValidState(message.parent('.form-group'), isValid);
+        return !!isValid;
+      }
+
       const sendButton = $('#submit')
       const container = $('#contacts-container');
       const form = $('#contacts');
+      const shotType = $('[name=shotType]');
+      const message = $('[name=message]');
       
       $('#send-another').on('click', function() {
         form.removeClass('message-sent');
         container.attr('disabled', false);
-        $('[name=shotType]').val('');
-        $('[name=message]').val('');
+        shotType.val('');
+        message.val('');
       });
 
       $('#try-again').on('click', function() {
@@ -89,14 +100,18 @@
         $('#contacts').submit(function(event) {
           event.preventDefault();
           const required = form.find('[data-required]');
-          let isValid = false;
+          let isValid = validateShotType();
           required.each(function(index, el) {
             el = $(el)
             const name = el.data('required');
             const target = el.find('[name=' + name + ']');
-            isValid = !!target.val();
+            if(isValid) {
+              isValid = !!target.val();
+            }
             toggleValidState(el, target.val());
           });
+          
+          if(!isValid) return;
           
           sendButton.button('loading');
           
