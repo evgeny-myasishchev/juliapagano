@@ -13,6 +13,7 @@ module.exports = {
     shotType: {
       enum: [
         null,
+        '',
         'portrait session',
         'baby or family session'
       ]
