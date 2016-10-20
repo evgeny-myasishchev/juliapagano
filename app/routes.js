@@ -72,11 +72,13 @@ router.get('/contacts', function (req, res) {
 });
 
 router.post('/contacts', schema.validateRequest('contactRequest'), invoke(function * (req, res) {
+  req.log.info('Sending contacts message');
   yield emailProvider.sendEmail({
     from: req.body.email,
     to: config.get('contacts.sendTo'),
     template: new EmailTemplate('contacts', req.body)
   });
+  req.log.info('Sending contacts thanks message');
   yield emailProvider.sendEmail({
     from: config.get('contacts.sendTo'),
     to: req.body.email,
