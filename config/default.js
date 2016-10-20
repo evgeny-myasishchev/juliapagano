@@ -52,5 +52,9 @@ module.exports = {
       domain: process.env.MAILGUN_MAIL_DOMAIN,
       key: process.env.MAILGUN_API_KEY
     }
+  },
+
+  swig: {
+    cache: 'memory'
   }
 };

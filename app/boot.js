@@ -53,7 +53,7 @@ const BootApp = function () {
 
     //TODO: Enable in production
     swig.setDefaults({
-      cache: false,
+      cache: config.get('swig.cache'),
       locals: {
         pages: pages,
         contentConfig: config.content
