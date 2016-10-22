@@ -22,6 +22,11 @@ module.exports = {
     name: 'Info and Prices',
     path: '/info-and-prices',
   },
-  blog: { name: 'Blog', path: 'http://juliapagano.blogspot.co.uk/' },
+  blog: {
+    name: 'Blog',
+    path: 'http://juliapagano.blogspot.co.uk/',
+    external: true,
+    externalHint: 'This opens my blog which is a different site.'
+  },
   contacts: { name: 'Contacts', path: '/contacts' }
 };

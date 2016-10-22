@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
   port: 3000,
   assets: {
-    compile: true,
     paths: [
       'app/assets/css',
       'app/assets/js',
