@@ -13,3 +13,27 @@
 	display: block;
 	padding-top: 10px;
 }
+
+.has-error .error-hidden, .validation-message {
+  display: none;
+}
+
+.has-error .validation-message {
+  display: block;
+}
+
+#contacts .success-container, #contacts .failure-container {
+  display: none;
+}
+
+#contacts.message-sent #submit, #contacts.message-sending-failed #submit {
+  display: none;
+}
+
+#contacts.message-sent .success-container {
+  display: block;
+}
+
+#contacts.message-sending-failed .failure-container {
+  display: block;
+}

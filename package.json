@@ -15,29 +15,39 @@
   "author": "Evgeny Myasishchev",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^4.7.7",
     "async": "~0.9.0",
     "bluebird": "^2.9.34",
+    "body-parser": "^1.15.2",
     "bunyan": "^1.8.1",
     "bunyan-middleware": "^0.3.1",
+    "co": "^4.6.0",
     "config": "^1.21.0",
     "connect-assets": "^4.8.0",
-    "ejs": "~2.2.2",
+    "ejs": "^2.2.4",
+    "email-templates": "^2.5.2",
     "express": "^4.11.0",
     "lodash": "^4.13.1",
     "lru-cache": "^4.0.1",
     "request": "^2.72.0",
+    "request-promise": "^4.1.1",
     "swig": "^1.4.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chance": "^1.0.4",
     "check-node-version": "^1.1.1",
+    "commander": "^2.9.0",
     "jscs": "^3.0.3",
     "jshint": "^2.9.2",
-    "mocha": "^2.5.3",
+    "mocha": "^3.1.2",
     "nock": "^8.0.0",
+    "request-promise": "^4.1.1",
     "shipit-cli": "^1.4.1",
     "sinon": "^1.17.4",
+    "sinon-as-promised": "^4.0.2",
     "sinon-chai": "^2.8.0",
-    "supertest": "^0.15.0"
+    "supertest": "^0.15.0",
+    "supertest-as-promised": "^4.0.0"
   }
 }

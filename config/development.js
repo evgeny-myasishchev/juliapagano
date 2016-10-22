@@ -4,5 +4,9 @@ module.exports = {
       enabled: true,
       path: 'log/development.log'
     }
+  },
+
+  swig: {
+    cache: false
   }
 };
