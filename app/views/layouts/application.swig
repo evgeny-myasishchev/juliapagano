@@ -32,9 +32,12 @@
 						<div id="navbar" class="navbar-collapse collapse">
 							<ul class="nav navbar-nav">
 								{% for page in pages %}
-									<li {% if page == currentPage %} class="active" {% endif %}>
-										<a href="{{ page.path }}">{{ page.name }}</a>
-									</li>
+								<li {% if page == currentPage %} class="active" {% endif %}>
+									<a href="{{ page.path }}" {% if page.external %}title="{{page.externalHint}}"{% endif %}>
+										{{ page.name }} 
+										<small>{% if page.external %}<i class="glyphicon glyphicon-new-window"></i>{% endif %}</small>
+									</a>
+								</li>
 								{% endfor %}
 							</ul>
 						</div>
