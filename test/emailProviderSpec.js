@@ -37,7 +37,9 @@ describe('emailProvider', () => {
         .reply(200, function (url, body) {
           const formData = _.fromPairs(decodeURIComponent(body).split('&').map((part) => part.split('=')));
           expect(formData).to.eql({
-            from, to, subject, text: text, html: html
+            from, to,
+            subject: `${config.get('emailProvider.subjectPrefix')}${subject}`,
+            text, html
           });
           expect(this.req.headers.authorization).to.eql('Basic ' + Buffer.from([
             mailgunCfg.user, mailgunCfg.key

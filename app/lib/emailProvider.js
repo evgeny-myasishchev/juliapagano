@@ -18,7 +18,7 @@ function *sendEmail(params) {
     form: {
       from: from,
       to: to,
-      subject: data.subject,
+      subject: `${config.get('emailProvider.subjectPrefix')}${data.subject}`,
       text: data.text,
       html: data.html
     }

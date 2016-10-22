@@ -26,6 +26,7 @@ module.exports = {
   },
 
   emailProvider: {
+    subjectPrefix: `[TEST-${chance.word()}]`,
     mailgun: {
       baseUrl: chance.url(),
       user: `mg-user-${chance.word()}`,

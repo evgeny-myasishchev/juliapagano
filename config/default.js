@@ -46,6 +46,7 @@ module.exports = {
   },
 
   emailProvider: {
+    subjectPrefix: '[TEST]',
     mailgun: {
       baseUrl: 'https://api.mailgun.net/v3',
       user: 'api',
