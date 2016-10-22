@@ -1,9 +1,27 @@
 'use strict';
 
+const co = require('co');
+const config = require('config');
+const emailProvider = require('./lib/emailProvider');
+const EmailTemplate = require('./lib/EmailTemplate');
 const express = require('express');
-const router = express.Router();
 const pages = require('./lib/pages');
 const photoset = require('./models/photoset');
+const schema = require('./lib/schema');
+
+const router = express.Router();
+
+schema.add(require('./schema/contactRequest'), 'contactRequest');
+
+function invoke(generator) {
+  return function (req, res) {
+    co.wrap(generator)(req, res)
+    .catch((err) => {
+      req.log.error(err);
+      res.sendStatus(500);
+    });
+  };
+}
 
 router.get('/', function (req, res) {
   photoset.getPhotos(pages.home.carousel.photosetId)
@@ -52,5 +70,21 @@ router.get('/info-and-prices', function (req, res) {
 router.get('/contacts', function (req, res) {
   res.render('pages/contacts', { currentPage: pages.contacts });
 });
+
+router.post('/contacts', schema.validateRequest('contactRequest'), invoke(function * (req, res) {
+  req.log.info('Sending contacts message');
+  yield emailProvider.sendEmail({
+    from: req.body.email,
+    to: config.get('contacts.sendTo'),
+    template: new EmailTemplate('contacts', req.body)
+  });
+  req.log.info('Sending contacts thanks message');
+  yield emailProvider.sendEmail({
+    from: config.get('contacts.sendTo'),
+    to: req.body.email,
+    template: new EmailTemplate('contactsThanks', req.body)
+  });
+  res.end();
+}));
 
 module.exports = router;
