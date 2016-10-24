@@ -49,5 +49,27 @@ describe('emailProvider', () => {
       yield emailProvider.sendEmail({ from, to, template });
       scope.done();
     }));
+
+    it('should have no subject prefix if it is null in config', co.wrap(function * () {
+      const subject = `Subj ${chance.word()}`;
+      const template = new EmailTemplate('some-path', { fake: 'data' });
+      sandbox.stub(template, 'render').resolves({
+        html: chance.word(), text: chance.word(), subject
+      });
+      let scope = nock(mailgunCfg.baseUrl)
+        .post(`/${mailgunCfg.domain}/messages`)
+        .reply(200, function (url, body) {
+          const formData = _.fromPairs(decodeURIComponent(body).split('&').map((part) => part.split('=')));
+          expect(formData.subject).to.eql(subject);
+        });
+
+      yield emailProvider.sendEmail({
+        subjectPrefix: null,
+        from: chance.email(),
+        to: chance.email(),
+        template
+      });
+      scope.done();
+    }));
   });
 });
