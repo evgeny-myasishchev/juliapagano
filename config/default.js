@@ -17,7 +17,7 @@ module.exports = {
   },
 
   content: {
-    siteTitle: 'Photographer in fife'
+    siteTitle: 'Photographer in Fife'
   },
 
   logging: {
