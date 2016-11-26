@@ -4,7 +4,7 @@ const config = require('config').get('cache');
 const LRU = require('lru-cache');
 const cache = LRU({
     max: config.max,
-    maxAge: config.maxAge
+    maxAge: config.maxAgeMs
   });
 
 function set(key, value, maxAge) {
