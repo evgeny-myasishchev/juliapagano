@@ -11,7 +11,7 @@
 	<div data-ride="carousel"  class="carousel slide" id="home-screen-carousel">
 		<ol class="carousel-indicators">
 			{% for photo in carouselPhotoset.items %}
-			<li data-target="#home-screen-carousel" data-slide-to="{{ loop.index }}" class="{% if loop.first %}active{% endif %}"></li>
+			<li data-target="#home-screen-carousel" data-slide-to="{{ loop.index - 1 }}" class="{% if loop.first %}active{% endif %}"></li>
 			{% endfor %}
 		</ol>
 		<div role="listbox" class="carousel-inner">
