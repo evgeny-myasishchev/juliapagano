@@ -55,8 +55,8 @@
     </div>
   </form>
 
-  You can also reach me on Facebook: <a href='https://facebook.com/juliapaganophotography'>facebook.com/juliapaganophotography</a>
-  or on Instagram: <a href="https://www.instagram.com/yuliapagano/">@yuliapagano</a>
+  You can also reach me on <a href='https://facebook.com/juliapaganophotography'><i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook</a>
+  or on <a href="https://www.instagram.com/yuliapagano/"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a>
   or directly by email: <a href='mailto:&#105;&#110;&#102;&#111;&#064;&#106;&#117;&#108;&#105;&#097;&#112;&#097;&#103;&#097;&#110;&#111;&#046;&#099;&#111;&#046;&#117;&#107;'>&#105;&#110;&#102;&#111;&#064;&#106;&#117;&#108;&#105;&#097;&#112;&#097;&#103;&#097;&#110;&#111;&#046;&#099;&#111;&#046;&#117;&#107;</a>
 {% endblock %}
 
@@ -70,7 +70,7 @@
           el.addClass('has-error');
         }
       }
-      
+
       function validateShotType() {
         const isValid = shotType.val() || message.val();
         toggleValidState(shotType.parent('.form-group'), isValid);
@@ -82,7 +82,7 @@
       const form = $('#contacts');
       const shotType = $('[name=shotType]');
       const message = $('[name=message]');
-      
+
       $('#send-another').on('click', function() {
         sendButton.button('reset');
         form.removeClass('message-sent');
@@ -95,7 +95,7 @@
         form.removeClass('message-sending-failed');
         form.submit();
       });
-      
+
       $(function() {
         $('#contacts').submit(function(event) {
           event.preventDefault();
@@ -110,11 +110,11 @@
             }
             toggleValidState(el, target.val());
           });
-          
+
           if(!isValid) return;
-          
+
           sendButton.button('loading');
-          
+
           $.ajax({
             type : 'POST',
             url : '/contacts',

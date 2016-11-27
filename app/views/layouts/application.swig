@@ -13,6 +13,7 @@
 			{% endif %}
 		{% endblock %}
 		</title>
+    <script src="https://use.fontawesome.com/f8487f88dd.js"></script>
 		{{css('vendor')}}
 		{{css('application')}}
 	</head>
@@ -34,7 +35,7 @@
 								{% for page in pages %}
 								<li {% if page == currentPage %} class="active" {% endif %}>
 									<a href="{{ page.path }}" {% if page.external %}title="{{page.externalHint}}"{% endif %}>
-										{{ page.name }} 
+										{{ page.name }}
 										<small>{% if page.external %}<i class="glyphicon glyphicon-new-window"></i>{% endif %}</small>
 									</a>
 								</li>
