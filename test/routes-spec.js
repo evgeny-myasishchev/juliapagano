@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const boot = require('../app/boot');
 const chai = require('chai');
 const chance = require('./mocks/chance');
@@ -127,12 +128,24 @@ describe('routes', function () {
   });
 
   describe('GET /info-and-prices', function () {
-    it('should render info-and-prices page', function (done) {
-      request(app).get('/info-and-prices').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/info-and-prices', sinon.match({ currentPage: pages['info-and-prices'] }));
-        done();
+    it('should render info-and-prices page with photoset for each price', co.wrap(function * () {
+      const page = pages['info-and-prices'];
+      const photosets = _.keyBy(
+        page.prices.map((price) => ({ dummyPhotoset: price.photosetId })),
+        (photoset) => photoset.dummyPhotoset
+      );
+
+      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
+        return Promise.resolve(photosets[photosetId]);
       });
-    });
+
+      yield request(app).get('/info-and-prices').expect(200);
+      expect(expressSpy.last.res.render).to.have.been
+        .calledWith('pages/info-and-prices', sinon.match({
+          currentPage: page,
+          photosets
+        }));
+    }));
   });
 
   describe('GET /contacts', function () {

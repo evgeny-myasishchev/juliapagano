@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const co = require('co');
 const config = require('config');
 const emailProvider = require('./lib/emailProvider');
@@ -7,6 +8,7 @@ const EmailTemplate = require('./lib/EmailTemplate');
 const express = require('express');
 const pages = require('./lib/pages');
 const photoset = require('./models/photoset');
+const Promise = require('bluebird');
 const schema = require('./lib/schema');
 
 const router = express.Router();
@@ -63,9 +65,17 @@ router.get('/kind-words', function (req, res) {
   res.render('pages/kind-words', { currentPage: pages['kind-words'] });
 });
 
-router.get('/info-and-prices', function (req, res) {
-  res.render('pages/info-and-prices', { currentPage: pages['info-and-prices'] });
-});
+router.get('/info-and-prices', invoke(function * (req, res) {
+  const currentPage = pages['info-and-prices'];
+  const photosets = _.fromPairs(
+    yield Promise.map(currentPage.prices, co.wrap(function * (price) {
+      req.log.debug(`Fetching price photoset: ${price.photosetId}`);
+      return [price.photosetId, yield photoset.getPhotos(price.photosetId)];
+    }))
+  );
+
+  res.render('pages/info-and-prices', { currentPage, photosets });
+}));
 
 router.get('/contacts', function (req, res) {
   res.render('pages/contacts', { currentPage: pages.contacts });

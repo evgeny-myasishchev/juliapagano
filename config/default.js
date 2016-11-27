@@ -24,6 +24,7 @@ module.exports = {
     name: 'juliapagano',
     stdout: {
       enabled: true,
+      filterAssets: false,
       level: 'debug'
     },
     file: {
