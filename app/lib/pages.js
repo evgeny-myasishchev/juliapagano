@@ -1,3 +1,5 @@
+const prices = require('../data/prices');
+
 module.exports = {
   home: {
     name: 'Home',
@@ -21,6 +23,7 @@ module.exports = {
   'info-and-prices': {
     name: 'Info and Prices',
     path: '/info-and-prices',
+    prices
   },
   blog: {
     name: 'Blog',
