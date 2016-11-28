@@ -77,6 +77,16 @@ router.get('/info-and-prices', invoke(function * (req, res) {
   res.render('pages/info-and-prices', { currentPage, photosets });
 }));
 
+router.get('/special-offers', invoke(function * (req, res) {
+  const currentPage = pages['special-offers'];
+  let ps;
+  if (currentPage.photosetId) {
+    ps = yield photoset.getPhotos(currentPage.photosetId);
+  }
+
+  res.render('pages/special-offers', { currentPage, photoset: ps });
+}));
+
 router.get('/contacts', function (req, res) {
   res.render('pages/contacts', { currentPage: pages.contacts });
 });

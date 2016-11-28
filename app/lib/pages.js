@@ -25,6 +25,11 @@ module.exports = {
     path: '/info-and-prices',
     prices
   },
+  'special-offers': {
+    name: 'Special Offers',
+    path: '/special-offers',
+    photosetId: ''
+  },
   blog: {
     name: 'Blog',
     path: 'http://juliapagano.blogspot.co.uk/',

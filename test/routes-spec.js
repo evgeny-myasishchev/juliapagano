@@ -148,6 +148,27 @@ describe('routes', function () {
     }));
   });
 
+  describe('GET /special-offers', function () {
+    it('should render special-offers page with photoset for each price', co.wrap(function * () {
+      const page = pages['special-offers'];
+      const dummyPhotoset = [
+        { photo1: timestamp + 100 },
+        { photo2: timestamp + 110 }
+      ];
+      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
+        expect(photosetId).to.eql(page.photosetId);
+        return Promise.resolve(dummyPhotoset);
+      });
+
+      yield request(app).get('/special-offers').expect(200);
+      expect(expressSpy.last.res.render).to.have.been
+        .calledWith('pages/special-offers', sinon.match({
+          currentPage: page,
+          photoset: page.photosetId ? dummyPhotoset : undefined
+        }));
+    }));
+  });
+
   describe('GET /contacts', function () {
     it('should render contacts page', function () {
       return request(app).get('/contacts').expect(200)
