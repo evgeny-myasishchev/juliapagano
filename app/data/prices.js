@@ -18,7 +18,7 @@ module.exports = [
     title: 'Baby’s first year package',
     fee: 'Session fee is £150',
     description: ['It includes three photo shoots during the first year+ of your baby’s life. The sessions are organized to capture important milestones as sitting, crawling, first steps and are recommened to do at newborn stage, around 6-8 months when the baby sits, and around 12+ months for first steps. A range of portraits will be made of the baby and the whole family during each session. Each session will result in 40-60 images. The package includes selection of 5X7 prints and digital images, or 25% discount for a photobook.'],
-    photosetId: '72157675496932041'
+    photosetId: '72157675814667170'
   },
   {
     title: 'Children portrait session',

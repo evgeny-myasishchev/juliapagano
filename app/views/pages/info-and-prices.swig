@@ -9,11 +9,11 @@
           <h3>{{ price.title }}</h3>
           <p>{{ price.fee }}</p>
           {% for image in photosets[price.photosetId].items %}
-            <a data-lightbox="{{price.photosetId}}" style='width: 100px;'
+            <a data-lightbox="{{price.photosetId}}"
                href="{{image.sizes['Original'].source}}"
-               class="thumbnail"
+               class="thumbnail inline-block"
                title="{{image.title}}">
-                <img src="{{image.sizes['Thumbnail'].source}}" alt="{{image.title}}">
+                <img src="{{image.sizes['Large Square'].source}}" alt="{{image.title}}">
             </a>
           {% endfor %}
           {% for description in price.description %}

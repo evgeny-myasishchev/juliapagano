@@ -37,3 +37,7 @@
 #contacts.message-sending-failed .failure-container {
   display: block;
 }
+
+.inline-block {
+  display: inline-block;
+}
