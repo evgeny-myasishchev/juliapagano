@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "description": "Web site of Julia Pagano",
   "repository": "github:evgeny-myasishchev/juliapagano",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "check-node-version": "check-node-version --node `cat .nvmrc`",
     "pretest": "npm run check-node-version && npm run lint",
