@@ -28,7 +28,7 @@ module.exports = {
   'special-offers': {
     name: 'Special Offers',
     path: '/special-offers',
-    photosetId: ''
+    photosetId: '72157673194132624'
   },
   blog: {
     name: 'Blog',
