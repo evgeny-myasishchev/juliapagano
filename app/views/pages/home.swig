@@ -8,10 +8,10 @@
 		Julia Pagano Photography
 		<small id='slogan'>Real moments. Priceless memories.</small>
 	</h1>
-	<div data-ride="carousel"  class="carousel slide" id="home-screen-carousel">
+	<div data-ride="carousel" class="carousel slide" id="home-screen-carousel" data-interval="3000">
 		<ol class="carousel-indicators">
 			{% for photo in carouselPhotoset.items %}
-			<li data-target="#home-screen-carousel" data-slide-to="{{ loop.index - 1 }}" class="{% if loop.first %}active{% endif %}"></li>
+			<li interval data-target="#home-screen-carousel" data-slide-to="{{ loop.index - 1 }}" class="{% if loop.first %}active{% endif %}"></li>
 			{% endfor %}
 		</ol>
 		<div role="listbox" class="carousel-inner">
