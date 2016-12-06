@@ -1,17 +1,7 @@
+const _ = require('lodash');
+const logger = require('../logging').getLogger('MONGO');
 const MongoClient = require('mongodb').MongoClient;
 const Promise = require('bluebird');
-const logger = require('../logging').getLogger('MONGO');
-
-class Collection {
-  constructor(mongoCol) {
-    this._col = mongoCol;
-  }
-
-  bulkWrite(operations) {
-    //TODO: Options
-    return this._col.bulkWrite(operations);
-  }
-}
 
 class Mongo {
   constructor(mongoCfg) {
@@ -21,12 +11,13 @@ class Mongo {
   }
 
   collection(name) {
-    return this._collections[name] || (this._collections[name] = new Collection(this._db.collection(name)));
+    return this._collections[name] || (this._collections[name] = this._db.collection(name));
   }
 
   close() {
     if (this._db) {
       return this._db.close(false).then(() => {
+        this._db = null;
         logger.info('Connection closed');
       });
     } else {
@@ -38,7 +29,10 @@ class Mongo {
   connect() {
     const self = this;
     return new Promise((resolve, reject) => {
-      MongoClient.connect(self._mongoCfg.url, self._mongoCfg.options, (err, db) => {
+      const opts = _.merge({
+        promiseLibrary: Promise
+      }, self._mongoCfg.options);
+      MongoClient.connect(self._mongoCfg.url, opts, (err, db) => {
         if (err) return reject(err);
         logger.info(`Mongo connection established: ${self._mongoCfg.url}`);
         self._db = db;

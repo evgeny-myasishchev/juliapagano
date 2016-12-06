@@ -2,6 +2,10 @@ const path = require('path');
 const chance = require('../test/mocks/chance');
 
 module.exports = {
+  mongo: {
+    url: 'mongodb://localhost/juliapagano-test'
+  },
+
   flickrClient: {
     apiKey: 'dummy-api-key-' + new Date().getTime(),
     userId: 'dummy-user-id-' + new Date().getTime()
