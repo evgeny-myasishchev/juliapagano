@@ -4,6 +4,13 @@
 
 Personal website of photographer Julia Pagano
 
+# Development
+
+Mongo is used as a storage engine so it has to be running on dev workstation.
+Simplest way is to use docker:
+
+```docker run --name mongo-dev -d -p 27017:27017 mongo:3.4```
+
 # Docker
 
 ## Build image

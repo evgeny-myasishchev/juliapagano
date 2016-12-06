@@ -30,7 +30,8 @@
     "lru-cache": "^4.0.1",
     "request": "^2.72.0",
     "request-promise": "^4.1.1",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "mongodb": "~2.2.12"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -11,6 +11,16 @@ module.exports = {
     buildDir: 'public/assets'
   },
 
+  mongo: {
+    url: 'mongodb://localhost/juliapagano-dev',
+
+    //Mongo connection settings
+    //See: http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/connection-settings/
+    options: {
+      poolSize: 10
+    }
+  },
+
   flickrClient: {
     apiKey: process.env.FLICKR_API_KEY,
     userId: process.env.FLICKR_USER_ID
