@@ -5,7 +5,7 @@ module.exports = {
   mongo: {
     url: 'mongodb://localhost/juliapagano-test',
     log: {
-      level: 'debug'
+      level: 'info'
     }
   },
 

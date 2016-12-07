@@ -5,6 +5,7 @@ const chai = require('chai');
 const chance = require('./mocks/chance');
 const co = require('co');
 const Mongo = require('../app/lib/Mongo');
+const Promise = require('bluebird');
 
 const expect = chai.expect;
 
@@ -12,7 +13,7 @@ describe('Mongo', () => {
   global.loggingHookup();
 
   let mongo = new Mongo();
-  before(() => mongo.connect());
+  before(() => co(() => mongo.connect()));
   after(() => mongo.close());
 
   describe('collection', () => {
@@ -21,7 +22,12 @@ describe('Mongo', () => {
     beforeEach(() => {
       collection = mongo.collection('mongo-test');
       return collection.drop()
-        .catch({ codeName: 'NamespaceNotFound' }, _.noop);
+        .catch({ codeName: 'NamespaceNotFound' }, _.noop)
+        .catch(function (err) {
+          console.log(`Failed to drop collection. Server version: ${mongo.serverVersion}`);
+          console.log(err);
+          return Promise.reject(err);
+        });
     });
 
     describe('generic', () => {

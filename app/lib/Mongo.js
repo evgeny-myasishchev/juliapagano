@@ -21,6 +21,10 @@ class Mongo {
     this._collections = {};
   }
 
+  get serverVersion() {
+    return this._serverInfo.version;
+  }
+
   collection(name) {
     return this._collections[name] || (this._collections[name] = this._db.collection(name));
   }
@@ -37,19 +41,16 @@ class Mongo {
     }
   }
 
-  connect() {
-    const self = this;
-    return new Promise((resolve, reject) => {
-      const opts = _.merge({
-        promiseLibrary: Promise
-      }, self._mongoCfg.options);
-      MongoClient.connect(self._mongoCfg.url, opts, (err, db) => {
-        if (err) return reject(err);
-        logger.info(`Mongo connection established: ${self._mongoCfg.url}`);
-        self._db = db;
-        return resolve(self);
-      });
-    });
+  * connect() {
+    const opts = _.merge({
+      promiseLibrary: Promise
+    }, this._mongoCfg.options);
+    const db = yield MongoClient.connect(this._mongoCfg.url, opts);
+    const serverInfo = yield db.admin().serverInfo();
+    this._serverInfo = serverInfo;
+    logger.info(_.pick(serverInfo, 'version'), `Mongo connection established: ${this._mongoCfg.url}`);
+    this._db = db;
+    return this;
   }
 }
 
