@@ -1,11 +1,22 @@
+'use strict';
+
 const _ = require('lodash');
+const config = require('config');
 const logger = require('../logging').getLogger('MONGO');
-const MongoClient = require('mongodb').MongoClient;
+const mongodb = require('mongodb');
 const Promise = require('bluebird');
+
+const MongoClient = mongodb.MongoClient;
+
+const driverLogger = logger.child({ driver: 'mongodb ' });
+mongodb.Logger.setLevel(config.get('mongo.log.level'));
+mongodb.Logger.setCurrentLogger(function (msg, evt) {
+  driverLogger.debug(evt.message);
+});
 
 class Mongo {
   constructor(mongoCfg) {
-    this._mongoCfg = mongoCfg || (require('config')).get('mongo');
+    this._mongoCfg = mongoCfg || config.get('mongo');
     this._db = null;
     this._collections = {};
   }

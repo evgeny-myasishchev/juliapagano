@@ -3,7 +3,10 @@ const chance = require('../test/mocks/chance');
 
 module.exports = {
   mongo: {
-    url: 'mongodb://localhost/juliapagano-test'
+    url: 'mongodb://localhost/juliapagano-test',
+    log: {
+      level: 'debug'
+    }
   },
 
   flickrClient: {

@@ -18,6 +18,10 @@ module.exports = {
     //See: http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/connection-settings/
     options: {
       poolSize: 10
+    },
+
+    log: {
+      level: 'info'
     }
   },
 
