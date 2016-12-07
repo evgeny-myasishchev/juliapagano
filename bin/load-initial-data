@@ -4,7 +4,6 @@
 
 //Load initial data into mongo database
 
-const _ = require('lodash');
 const co = require('co');
 const initialData = require('../data/initial-data');
 const Mongo = require('../app/lib/Mongo');
@@ -17,15 +16,7 @@ co(function * () {
 
   logger.info(`Writting pages: ${initialData.pages.length}`);
   const pages = db.collection('pages');
-  yield pages.bulkWrite(
-    initialData.pages.map((page) => ({
-      insertOne: {
-        document: _.assign({
-          _id: page.id
-        }, _.omit(page, 'id'))
-      }
-    })
-  ));
+  yield pages.insertMany(initialData.pages);
   logger.info('Initial data loaded into mongo');
 })
 .then(() => db.close())

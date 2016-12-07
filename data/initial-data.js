@@ -4,7 +4,7 @@
 module.exports = {
   pages: [
     {
-      id: 'info-and-prices',
+      _id: 'info-and-prices',
       title: 'Info and Prices',
       blocks: [
         {
