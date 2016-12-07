@@ -22,7 +22,7 @@ describe('Mongo', () => {
     beforeEach(() => {
       collection = mongo.collection('mongo-test');
       return collection.drop()
-        .catch({ codeName: 'NamespaceNotFound' }, _.noop)
+        .catch({ code: 26 }, _.noop)
         .catch(function (err) {
           console.log(`Failed to drop collection. Server version: ${mongo.serverVersion}`);
           console.log(err);
