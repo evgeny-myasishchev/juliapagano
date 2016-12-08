@@ -8,9 +8,7 @@
     "check-node-version": "check-node-version --node `cat .nvmrc`",
     "pretest": "npm run check-node-version && npm run lint",
     "test": "NODE_ENV=test mocha --recursive",
-    "jscs": "jscs ./",
-    "jshint": "jshint .",
-    "lint": "npm run jshint && npm run jscs"
+    "lint": "echo TODO"
   },
   "author": "Evgeny Myasishchev",
   "license": "ISC",
