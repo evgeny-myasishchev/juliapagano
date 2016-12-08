@@ -1,5 +1,3 @@
-'use strict';
-
 process.env.NODE_ENV = 'test';
 
 const chai = require('chai');
@@ -13,15 +11,15 @@ chai.use(sinonChai);
 const logger = logging.getLogger().child({ tests: true });
 
 global.loggingHookup = function () {
-    beforeEach(function () {
-        logger.info('============================================================');
-        logger.info('=== Starting test "' + this.currentTest.fullTitle() + '" ===');
-        logger.info('============================================================');
-      });
+  beforeEach(function () {
+    logger.info('============================================================');
+    logger.info(`=== Starting test "${this.currentTest.fullTitle()}" ===`);
+    logger.info('============================================================');
+  });
 
-    afterEach(function () {
-        logger.info('===========================================================================');
-        logger.info('Test ' + this.currentTest.state + ' "' + this.currentTest.fullTitle() + '"');
-        logger.info('===========================================================================');
-      });
-  };
+  afterEach(function () {
+    logger.info('===========================================================================');
+    logger.info(`Test ${this.currentTest.state} "${this.currentTest.fullTitle()}"`);
+    logger.info('===========================================================================');
+  });
+};

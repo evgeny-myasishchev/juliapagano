@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const chai = require('chai');
 const chance = require('./mocks/chance');
@@ -12,7 +10,7 @@ const expect = chai.expect;
 describe('Mongo', () => {
   global.loggingHookup();
 
-  let mongo = new Mongo();
+  const mongo = new Mongo();
   before(() => co(() => mongo.connect()));
   after(() => mongo.close());
 
@@ -23,15 +21,15 @@ describe('Mongo', () => {
       collection = mongo.collection('mongo-test');
       return collection.drop()
         .catch({ code: 26 }, _.noop)
-        .catch(function (err) {
-          console.log(`Failed to drop collection. Server version: ${mongo.serverVersion}`);
-          console.log(err);
+        .catch((err) => {
+          console.log(`Failed to drop collection. Server version: ${mongo.serverVersion}`); // eslint-disable-line no-console
+          console.log(err); // eslint-disable-line no-console
           return Promise.reject(err);
         });
     });
 
     describe('generic', () => {
-      it('should insert new documents', co.wrap(function * () {
+      it('should insert new documents', co.wrap(function* () {
         const page1 = chance.page();
         const page2 = chance.page();
         yield collection.insertMany([page1, page2]);
@@ -41,13 +39,13 @@ describe('Mongo', () => {
         expect(all).to.contain(page2);
       }));
 
-      it('should throw error on duplicate id', co.wrap(function * () {
+      it('should throw error on duplicate id', co.wrap(function* () {
         const page1 = chance.page();
         yield collection.insert(page1);
         let errorRaised = false;
-        yield collection.insert(page1).catch({ code: 11000 }, function (err) {
+        yield collection.insert(page1).catch({ code: 11000 }, (err) => {
           errorRaised = true;
-          expect(err.message).to.contain(page1._id);
+          expect(err.message).to.contain(_.get(page1, '_id'));
         });
 
         expect(errorRaised).to.eql(true);

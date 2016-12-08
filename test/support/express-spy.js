@@ -1,5 +1,3 @@
-'use strict';
-
 const sinon = require('sinon');
 
 const expressSpy = (function () {
@@ -10,6 +8,6 @@ const expressSpy = (function () {
   };
 
   return fn;
-})();
+}());
 
 module.exports = expressSpy;

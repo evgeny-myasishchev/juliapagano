@@ -1,5 +1,3 @@
-'use strict';
-
 const chance = require('chance')();
 
 chance.mixin({
@@ -10,19 +8,19 @@ chance.mixin({
       {
         type: `block-type-${chance.word()}`,
         title: `Block Title ${chance.word()}`,
-        description: chance.sentence()
-      }
-    ]
+        description: chance.sentence(),
+      },
+    ],
   }),
 
   contactsRequestPayload: () => ({
     name: chance.name(),
     shotType: chance.pick([
-      null, 'portrait session', 'baby or family session'
+      null, 'portrait session', 'baby or family session',
     ]),
     email: chance.email(),
-    message: chance.sentence()
-  })
+    message: chance.sentence(),
+  }),
 });
 
 module.exports = chance;

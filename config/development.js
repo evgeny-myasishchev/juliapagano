@@ -1,15 +1,15 @@
 module.exports = {
   logging: {
     stdout: {
-      filterAssets: true
+      filterAssets: true,
     },
     file: {
       enabled: true,
-      path: 'log/development.log'
-    }
+      path: 'log/development.log',
+    },
   },
 
   swig: {
-    cache: false
-  }
+    cache: false,
+  },
 };

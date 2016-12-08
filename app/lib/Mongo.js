@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const config = require('config');
 const logger = require('../logging').getLogger('MONGO');
@@ -10,7 +8,7 @@ const MongoClient = mongodb.MongoClient;
 
 const driverLogger = logger.child({ driver: 'mongodb ' });
 mongodb.Logger.setLevel(config.get('mongo.log.level'));
-mongodb.Logger.setCurrentLogger(function (msg, evt) {
+mongodb.Logger.setCurrentLogger((msg, evt) => {
   driverLogger.debug(evt.message);
 });
 
@@ -35,15 +33,14 @@ class Mongo {
         this._db = null;
         logger.info('Connection closed');
       });
-    } else {
-      logger.info('No active connection to close');
-      return Promise.resolve();
     }
+    logger.info('No active connection to close');
+    return Promise.resolve();
   }
 
   * connect() {
     const opts = _.merge({
-      promiseLibrary: Promise
+      promiseLibrary: Promise,
     }, this._mongoCfg.options);
     const db = yield MongoClient.connect(this._mongoCfg.url, opts);
     const serverInfo = yield db.admin().serverInfo();

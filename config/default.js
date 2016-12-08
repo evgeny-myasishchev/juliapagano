@@ -6,32 +6,32 @@ module.exports = {
     paths: [
       'app/assets/css',
       'app/assets/js',
-      'vendor/assets'
+      'vendor/assets',
     ],
-    buildDir: 'public/assets'
+    buildDir: 'public/assets',
   },
 
   mongo: {
     url: 'mongodb://localhost/juliapagano-dev',
 
-    //Mongo connection settings
-    //See: http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/connection-settings/
+    // Mongo connection settings
+    // See: http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/connection-settings/
     options: {
-      poolSize: 10
+      poolSize: 10,
     },
 
     log: {
-      level: 'info'
-    }
+      level: 'info',
+    },
   },
 
   flickrClient: {
     apiKey: process.env.FLICKR_API_KEY,
-    userId: process.env.FLICKR_USER_ID
+    userId: process.env.FLICKR_USER_ID,
   },
 
   content: {
-    siteTitle: 'Photographer in Fife'
+    siteTitle: 'Photographer in Fife',
   },
 
   logging: {
@@ -39,24 +39,24 @@ module.exports = {
     stdout: {
       enabled: true,
       filterAssets: false,
-      level: 'debug'
+      level: 'debug',
     },
     file: {
-      enabled: false
-    }
+      enabled: false,
+    },
   },
 
   cache: {
     maxItems: 100,
-    maxAgeMs: 30 * 60 * 1000 //30 minutes
+    maxAgeMs: 30 * 60 * 1000, // 30 minutes
   },
 
   EmailTemplate: {
-    baseDir: path.join('app', 'views', 'mail')
+    baseDir: path.join('app', 'views', 'mail'),
   },
 
   contacts: {
-    sendTo: process.env.CONTACTS_SEND_TO
+    sendTo: process.env.CONTACTS_SEND_TO,
   },
 
   emailProvider: {
@@ -65,11 +65,11 @@ module.exports = {
       baseUrl: 'https://api.mailgun.net/v3',
       user: 'api',
       domain: process.env.MAILGUN_MAIL_DOMAIN,
-      key: process.env.MAILGUN_API_KEY
-    }
+      key: process.env.MAILGUN_API_KEY,
+    },
   },
 
   swig: {
-    cache: 'memory'
-  }
+    cache: 'memory',
+  },
 };

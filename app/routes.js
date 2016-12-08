@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const co = require('co');
 const config = require('config');
@@ -16,7 +14,7 @@ const router = express.Router();
 schema.add(require('./schema/contactRequest'), 'contactRequest');
 
 function invoke(generator) {
-  return function (req, res) {
+  return function invokeWrapper(req, res) {
     co.wrap(generator)(req, res)
     .catch((err) => {
       req.log.error(err);
@@ -25,50 +23,50 @@ function invoke(generator) {
   };
 }
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   photoset.getPhotos(pages.home.carousel.photosetId)
-    .then(function (photoset) {
-      res.render('pages/home', { currentPage: pages.home, carouselPhotoset: photoset });
+    .then((ps) => {
+      res.render('pages/home', { currentPage: pages.home, carouselPhotoset: ps });
     })
-    .catch(function (err) {
+    .catch((err) => {
       req.log.error('Failed to get photos.', err);
       res.sendStatus(500);
     });
 });
 
-router.get('/about', function (req, res) {
+router.get('/about', (req, res) => {
   photoset.getPhotos(pages.about.selfie.photosetId)
-    .then(function (photoset) {
+    .then((ps) => {
       res.render('pages/about', {
         currentPage: pages.about,
-        selfie: photoset.items[0]
+        selfie: ps.items[0],
       });
     })
-    .catch(function (err) {
+    .catch((err) => {
       req.log.error('Failed to get photos.', err);
       res.sendStatus(500);
     });
 });
 
-router.get('/portfolio', function (req, res) {
+router.get('/portfolio', (req, res) => {
   photoset.getPhotos(pages.portfolio.gallery.photosetId)
-    .then(function (photoset) {
-      res.render('pages/portfolio', { currentPage: pages.portfolio, galleryPhotoset: photoset });
+    .then((ps) => {
+      res.render('pages/portfolio', { currentPage: pages.portfolio, galleryPhotoset: ps });
     })
-    .catch(function (err) {
+    .catch((err) => {
       req.log.error('Failed to get photos.', err);
       res.sendStatus(500);
     });
 });
 
-router.get('/kind-words', function (req, res) {
+router.get('/kind-words', (req, res) => {
   res.render('pages/kind-words', { currentPage: pages['kind-words'] });
 });
 
-router.get('/info-and-prices', invoke(function * (req, res) {
+router.get('/info-and-prices', invoke(function* (req, res) {
   const currentPage = pages['info-and-prices'];
   const photosets = _.fromPairs(
-    yield Promise.map(currentPage.prices, co.wrap(function * (price) {
+    yield Promise.map(currentPage.prices, co.wrap(function* (price) {
       req.log.debug(`Fetching price photoset: ${price.photosetId}`);
       return [price.photosetId, yield photoset.getPhotos(price.photosetId)];
     }))
@@ -77,7 +75,7 @@ router.get('/info-and-prices', invoke(function * (req, res) {
   res.render('pages/info-and-prices', { currentPage, photosets });
 }));
 
-router.get('/special-offers', invoke(function * (req, res) {
+router.get('/special-offers', invoke(function* (req, res) {
   const currentPage = pages['special-offers'];
   let ps;
   if (currentPage.photosetId) {
@@ -87,22 +85,22 @@ router.get('/special-offers', invoke(function * (req, res) {
   res.render('pages/special-offers', { currentPage, photoset: ps });
 }));
 
-router.get('/contacts', function (req, res) {
+router.get('/contacts', (req, res) => {
   res.render('pages/contacts', { currentPage: pages.contacts });
 });
 
-router.post('/contacts', schema.validateRequest('contactRequest'), invoke(function * (req, res) {
+router.post('/contacts', schema.validateRequest('contactRequest'), invoke(function* (req, res) {
   req.log.info('Sending contacts message');
   yield emailProvider.sendEmail({
     from: req.body.email,
     to: config.get('contacts.sendTo'),
-    template: new EmailTemplate('contacts', req.body)
+    template: new EmailTemplate('contacts', req.body),
   });
   req.log.info('Sending contacts thanks message');
   yield emailProvider.sendEmail({
     from: config.get('contacts.sendTo'),
     to: req.body.email,
-    template: new EmailTemplate('contactsThanks', req.body)
+    template: new EmailTemplate('contactsThanks', req.body),
   });
   res.end();
 }));

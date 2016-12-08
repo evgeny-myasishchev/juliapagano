@@ -3,27 +3,27 @@ module.exports = {
   type: 'object',
   required: [
     'name',
-    'email'
+    'email',
   ],
   properties: {
     name: {
       type: 'string',
-      minLength: 1
+      minLength: 1,
     },
     shotType: {
       enum: [
         null,
         '',
         'portrait session',
-        'baby or family session'
-      ]
+        'baby or family session',
+      ],
     },
     email: {
       type: 'string',
-      minLength: 1
+      minLength: 1,
     },
     message: {
-      type: 'string'
-    }
+      type: 'string',
+    },
   },
 };

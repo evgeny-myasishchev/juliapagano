@@ -1,5 +1,3 @@
-'use strict';
-
 const chai = require('chai');
 const chance = require('./mocks/chance');
 const co = require('co');
@@ -19,10 +17,10 @@ describe('EmailTemplate', () => {
     );
   }
 
-  it('should render provided template with given data', co.wrap(function * () {
+  it('should render provided template with given data', co.wrap(function* () {
     const data = {
       name: chance.name(),
-      email: chance.email()
+      email: chance.email(),
     };
     const template = new EmailTemplate('welcome', data);
     const result = yield template.render();

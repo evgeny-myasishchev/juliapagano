@@ -1,18 +1,18 @@
 module.exports = {
   assets: {
-    //Prod and stage should be the same
+    // Prod and stage should be the same
     build: true,
     compile: true,
     bundle: true,
     compress: true,
     gzip: true,
     fingerprinting: true,
-    sourceMaps: true
+    sourceMaps: true,
   },
   emailProvider: {
-    subjectPrefix: null
+    subjectPrefix: null,
   },
   flickrClient: {
-    cache: true
+    cache: true,
   },
 };
