@@ -42,7 +42,7 @@ function* loadInitialData(opts) {
   if (opts.force) {
     logger.info('Load forced. Overridding existing pages');
     const bulkWrite = initialData.pages.map(page => ({
-      replaceOne: { filter: { _id: page._id }, replacement: page, upsert: false },
+      replaceOne: { filter: { _id: page._id }, replacement: page, upsert: true },
     }));
     yield pages.bulkWrite(bulkWrite);
   } else {
