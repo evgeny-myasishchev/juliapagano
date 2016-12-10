@@ -15,8 +15,8 @@ program
   .command('load')
   .description('Load initial data into the database')
   .option('-f, --force', 'Override existing data')
-  .action(() => {
-    withDb(loadInitialData);
+  .action((opts) => {
+    withDb(() => loadInitialData(opts));
   });
 
 program.parse(process.argv);
@@ -36,9 +36,17 @@ function withDb(gen) {
     .finally(() => db.close());
 }
 
-function* loadInitialData() {
+function* loadInitialData(opts) {
   logger.info(`Writting pages: ${initialData.pages.length}`);
   const pages = db.collection('pages');
-  yield pages.insertMany(initialData.pages);
+  if (opts.force) {
+    logger.info('Load forced. Overridding existing pages');
+    const bulkWrite = initialData.pages.map(page => ({
+      replaceOne: { filter: { _id: page._id }, replacement: page, upsert: false },
+    }));
+    yield pages.bulkWrite(bulkWrite);
+  } else {
+    yield pages.insertMany(initialData.pages);
+  }
   logger.info('Initial data loaded into mongo');
 }

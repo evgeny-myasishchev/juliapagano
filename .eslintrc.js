@@ -4,7 +4,7 @@ module.exports = {
     "rules" : {
         "max-len" : ["error", 150],
         "func-names" : ["off"],
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "no-underscore-dangle": ["off"],
         "no-use-before-define": ["error", { "functions": false }],
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
