@@ -5,12 +5,22 @@ const co = require('co');
 const db = require('../app/lib/db');
 const errors = require('../app/lib/errors');
 const Page = require('../app/models/Page');
+const photoset = require('../app/models/photoset');
+const sinon = require('sinon');
 
 const expect = chai.expect;
 
 describe('Page', () => {
+  global.loggingHookup();
+
+  const sandbox = sinon.sandbox.create();
+
   before(() => co(() => db.connect()));
   after(() => db.close());
+
+  afterEach(() => {
+    sandbox.restore();
+  });
 
   describe('get', () => {
     let pageDoc;
@@ -37,6 +47,47 @@ describe('Page', () => {
       }
       expect(error).to.be.an.instanceof(errors.ResourceNotFound);
       expect(error.message).to.eql(`Page ${unknownId} not found`);
+    }));
+  });
+
+  describe('preloadPhotosets', () => {
+    let pageDoc;
+    let page;
+    let ps1;
+    let ps1Photos;
+    let ps2;
+    let ps2Photos;
+    let getPhotosStub;
+
+    beforeEach(() => {
+      pageDoc = chance.page();
+      pageDoc.blocks.push(ps1 = chance.blockWithPhotoset());
+      pageDoc.blocks.push(ps2 = chance.blockWithPhotoset());
+      page = new Page(pageDoc);
+
+      ps1Photos = { dummy: `photo-of-ps1-${chance.word()}` };
+      ps2Photos = { dummy: `photo-of-ps2-${chance.word()}` };
+
+      getPhotosStub = sandbox.stub(photoset, 'getPhotos', (psId) => {
+        if (psId === ps1.flickr.photosetId) {
+          return Promise.resolve(ps1Photos);
+        }
+        if (psId === ps2.flickr.photosetId) {
+          return Promise.resolve(ps2Photos);
+        }
+        return Promise.reject(new Error(`Photoset not found ${psId}`));
+      });
+    });
+
+    it('should preload all flickr photosets for given page', co.wrap(function* () {
+      yield page.preloadPhotosets();
+      const ps1Block = _.find(page.blocks, { id: ps1.id });
+      expect(ps1Block.flickr.photoset).to.eql(ps1Photos);
+      const ps2Block = _.find(page.blocks, { id: ps2.id });
+      expect(ps2Block.flickr.photoset).to.eql(ps2Photos);
+      expect(getPhotosStub).to.have.callCount(2);
+      expect(getPhotosStub).to.have.been.calledWith(ps1.flickr.photosetId);
+      expect(getPhotosStub).to.have.been.calledWith(ps2.flickr.photosetId);
     }));
   });
 });

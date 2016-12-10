@@ -13,6 +13,14 @@ chance.mixin({
     ],
   }),
 
+  blockWithPhotoset: () => ({
+    id: `block-id-${chance.word({ length: 10 })}`,
+    type: 'block-with-photoset',
+    flickr: {
+      photosetId: `photoset-${chance.word()}`,
+    },
+  }),
+
   contactsRequestPayload: () => ({
     name: chance.name(),
     shotType: chance.pick([
