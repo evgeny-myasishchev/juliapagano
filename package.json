@@ -7,8 +7,8 @@
   "scripts": {
     "check-node-version": "check-node-version --node `cat .nvmrc`",
     "pretest": "npm run check-node-version && npm run lint",
-    "test": "NODE_ENV=test mocha --recursive",
-    "lint": "echo TODO"
+    "test": "mocha --recursive",
+    "lint": "eslint . --cache"
   },
   "author": "Evgeny Myasishchev",
   "license": "ISC",
