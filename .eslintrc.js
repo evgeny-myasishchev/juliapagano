@@ -5,6 +5,7 @@ module.exports = {
         "max-len" : ["error", 150],
         "func-names" : ["off"],
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "no-use-before-define": ["error", { "functions": false }],
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
             "objects": "always-multiline",

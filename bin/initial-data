@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+// Load initial data into mongo database
+
+const co = require('co');
+const initialData = require('../data/initial-data');
+const logger = require('../app/logging').getLogger('INITIAL-DATA');
+const Mongo = require('../app/lib/Mongo');
+const program = require('commander');
+const Promise = require('bluebird');
+
+const db = new Mongo();
+
+program
+  .command('load')
+  .description('Load initial data into the database')
+  .option('-f, --force', 'Override existing data')
+  .action(() => {
+    withDb(loadInitialData);
+  });
+
+program.parse(process.argv);
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+  process.exit(1);
+}
+
+function withDb(gen) {
+  return Promise.resolve(co(() => db.connect()))
+    .then(() => co(gen))
+    .catch((err) => {
+      logger.error('Command failed');
+      logger.info(err.stack);
+    })
+    .finally(() => db.close());
+}
+
+function* loadInitialData() {
+  logger.info(`Writting pages: ${initialData.pages.length}`);
+  const pages = db.collection('pages');
+  yield pages.insertMany(initialData.pages);
+  logger.info('Initial data loaded into mongo');
+}
