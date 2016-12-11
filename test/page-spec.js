@@ -16,8 +16,7 @@ describe('Page', () => {
   const sandbox = sinon.sandbox.create();
 
   before(() => co(() => db.connect()));
-  after(() => db.close());
-
+  after(() => co(() => db.close()));
   afterEach(() => {
     sandbox.restore();
   });

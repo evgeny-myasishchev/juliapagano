@@ -12,7 +12,7 @@ describe('Mongo', () => {
 
   const mongo = new Mongo();
   before(() => co(() => mongo.connect()));
-  after(() => mongo.close());
+  after(() => co(() => mongo.close()));
 
   describe('collection', () => {
     let collection;

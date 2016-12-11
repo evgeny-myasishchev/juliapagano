@@ -4,9 +4,8 @@ const config = require('config');
 const emailProvider = require('./lib/emailProvider');
 const EmailTemplate = require('./lib/EmailTemplate');
 const express = require('express');
+const Page = require('./models/Page');
 const pages = require('./lib/pages');
-const photoset = require('./models/photoset');
-const Promise = require('bluebird');
 const schema = require('./lib/schema');
 
 const router = express.Router();
@@ -18,72 +17,10 @@ function invoke(generator) {
     co.wrap(generator)(req, res)
     .catch((err) => {
       req.log.error(err);
-      res.sendStatus(500);
+      res.sendStatus(_.get(err, 'httpStatus', 500));
     });
   };
 }
-
-router.get('/', (req, res) => {
-  photoset.getPhotos(pages.home.carousel.photosetId)
-    .then((ps) => {
-      res.render('pages/home', { currentPage: pages.home, carouselPhotoset: ps });
-    })
-    .catch((err) => {
-      req.log.error('Failed to get photos.', err);
-      res.sendStatus(500);
-    });
-});
-
-router.get('/about', (req, res) => {
-  photoset.getPhotos(pages.about.selfie.photosetId)
-    .then((ps) => {
-      res.render('pages/about', {
-        currentPage: pages.about,
-        selfie: ps.items[0],
-      });
-    })
-    .catch((err) => {
-      req.log.error('Failed to get photos.', err);
-      res.sendStatus(500);
-    });
-});
-
-router.get('/portfolio', (req, res) => {
-  photoset.getPhotos(pages.portfolio.gallery.photosetId)
-    .then((ps) => {
-      res.render('pages/portfolio', { currentPage: pages.portfolio, galleryPhotoset: ps });
-    })
-    .catch((err) => {
-      req.log.error('Failed to get photos.', err);
-      res.sendStatus(500);
-    });
-});
-
-router.get('/kind-words', (req, res) => {
-  res.render('pages/kind-words', { currentPage: pages['kind-words'] });
-});
-
-router.get('/info-and-prices', invoke(function* (req, res) {
-  const currentPage = pages['info-and-prices'];
-  const photosets = _.fromPairs(
-    yield Promise.map(currentPage.prices, co.wrap(function* (price) {
-      req.log.debug(`Fetching price photoset: ${price.photosetId}`);
-      return [price.photosetId, yield photoset.getPhotos(price.photosetId)];
-    }))
-  );
-
-  res.render('pages/info-and-prices', { currentPage, photosets });
-}));
-
-router.get('/special-offers', invoke(function* (req, res) {
-  const currentPage = pages['special-offers'];
-  let ps;
-  if (currentPage.photosetId) {
-    ps = yield photoset.getPhotos(currentPage.photosetId);
-  }
-
-  res.render('pages/special-offers', { currentPage, photoset: ps });
-}));
 
 router.get('/contacts', (req, res) => {
   res.render('pages/contacts', { currentPage: pages.contacts });
@@ -103,6 +40,14 @@ router.post('/contacts', schema.validateRequest('contactRequest'), invoke(functi
     template: new EmailTemplate('contactsThanks', req.body),
   });
   res.end();
+}));
+
+router.get('*', invoke(function* (req, res) {
+  const pageId = req.path === '/' ? 'home' : req.path.substr(1, req.path.length);
+  req.log.info(`Rendering dynamic page: ${pageId}`);
+  const page = yield Page.get(pageId);
+  yield page.preloadPhotosets();
+  res.render(`pages/${page.id}`, { currentPage: page });
 }));
 
 module.exports = router;

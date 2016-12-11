@@ -1,7 +1,8 @@
+const _ = require('lodash');
 const chance = require('chance')();
 
 chance.mixin({
-  page: () => ({
+  page: opts => (_.merge({
     _id: `page-${chance.word()}`,
     title: `Title ${chance.word()}`,
     blocks: [
@@ -11,7 +12,7 @@ chance.mixin({
         description: chance.sentence(),
       },
     ],
-  }),
+  }, opts)),
 
   blockWithPhotoset: () => ({
     id: `block-id-${chance.word({ length: 10 })}`,

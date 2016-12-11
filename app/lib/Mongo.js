@@ -31,6 +31,7 @@ class Mongo {
     if (this._db) {
       return this._db.close(false).then(() => {
         this._db = null;
+        this._collections = {};
         logger.info('Connection closed');
       });
     }
