@@ -80,6 +80,12 @@ describe('routes', () => {
     it('should respond with 404 if no page found',
       () => request(app).get(`/${pageDoc._id}-not-existing`).expect(404)
     );
+
+    it('not attempt to render nested pages', co.wrap(function* () {
+      yield request(app).get(`/${chance.word()}/${chance.word()}`).expect(404);
+      expect(Page.get).to.have.callCount(0);
+      expect(expressSpy.last.res.render).to.have.callCount(0);
+    }));
   });
 
   describe('GET /contacts', () => {

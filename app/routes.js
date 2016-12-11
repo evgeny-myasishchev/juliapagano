@@ -42,7 +42,9 @@ router.post('/contacts', schema.validateRequest('contactRequest'), invoke(functi
   res.end();
 }));
 
-router.get('*', invoke(function* (req, res) {
+// We only match single level. We don't have nested pages.
+// This will also let us rener static assets (e.g /assets/bootstrap/css/bootstrap.css)
+router.get(/^\/[\w-]*$/, invoke(function* (req, res) {
   const pageId = req.path === '/' ? 'home' : req.path.substr(1, req.path.length);
   req.log.info(`Rendering dynamic page: ${pageId}`);
   const page = yield Page.get(pageId);
