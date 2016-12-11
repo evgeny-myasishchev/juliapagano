@@ -1,7 +1,9 @@
 const bodyParser = require('body-parser');
 const bunyanMiddleware = require('bunyan-middleware');
+const co = require('co');
 const config = require('config');
 const connectAssets = require('connect-assets');
+const db = require('./lib/db');
 const logger = require('./logging').getLogger();
 const pages = require('./lib/pages');
 const Promise = require('bluebird');
@@ -64,6 +66,8 @@ function BootApp() {
   this.withAssets = defineStage('assets', (app) => {
     app.use(connectAssets(config.assets));
   });
+
+  this.withMongo = defineStage('mongo', co.wrap(() => db.connect()));
 
   this.withServer = defineStage('server', (app) => {
     const port = config.port;

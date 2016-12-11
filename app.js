@@ -4,6 +4,7 @@ const routes = require('./app/routes');
 
 boot.newApp()
   .withLogging()
+  .withMongo()
   .withRoutes(routes)
   .withViewEngine()
   .withAssets()
