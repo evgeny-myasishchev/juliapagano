@@ -24,6 +24,7 @@ class Mongo {
   }
 
   collection(name) {
+    if (!this._db) throw new Error('Mongo not connected');
     return this._collections[name] || (this._collections[name] = this._db.collection(name));
   }
 

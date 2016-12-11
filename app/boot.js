@@ -4,24 +4,26 @@ const config = require('config');
 const connectAssets = require('connect-assets');
 const logger = require('./logging').getLogger();
 const pages = require('./lib/pages');
+const Promise = require('bluebird');
 const swig = require('swig');
 
 function BootApp() {
   const bootStages = [];
   const self = this;
 
-  function defineStage(stage) {
+  function defineStage(name, stageFn) {
     return function stageBuilder(...args) {
       bootStages.push((app) => {
         args.unshift(app);
-        stage(...args);
+        logger.debug(`Performing bootstrap stage: ${name}`);
+        return stageFn(...args);
       });
 
       return self;
     };
   }
 
-  this.withLogging = defineStage((app) => {
+  this.withLogging = defineStage('logging', (app) => {
     app.use(bunyanMiddleware({
       requestStart: true,
       headerName: 'X-Request-Id',
@@ -32,7 +34,7 @@ function BootApp() {
     }));
   });
 
-  this.withRoutes = defineStage((app, routes) => {
+  this.withRoutes = defineStage('routes', (app, routes) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(routes);
@@ -42,7 +44,7 @@ function BootApp() {
     });
   });
 
-  this.withViewEngine = defineStage((app) => {
+  this.withViewEngine = defineStage('viewEngine', (app) => {
     app.engine('swig', swig.renderFile);
 
     app.set('view engine', 'swig');
@@ -59,11 +61,11 @@ function BootApp() {
     app.set('view cache', false);
   });
 
-  this.withAssets = defineStage((app) => {
+  this.withAssets = defineStage('assets', (app) => {
     app.use(connectAssets(config.assets));
   });
 
-  this.withServer = defineStage((app) => {
+  this.withServer = defineStage('server', (app) => {
     const port = config.port;
     const server = app.listen(port, () => {
       const host = server.address().address;
@@ -73,10 +75,8 @@ function BootApp() {
   });
 
   this.start = function start(app) {
-    for (let i = 0; i < bootStages.length; i += 1) {
-      const stage = bootStages[i];
-      stage(app);
-    }
+    logger.info('Starting application...');
+    Promise.each(bootStages, stage => stage(app));
   };
 }
 
