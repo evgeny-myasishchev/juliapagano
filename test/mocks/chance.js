@@ -14,13 +14,13 @@ chance.mixin({
     ],
   }, opts)),
 
-  blockWithPhotoset: () => ({
+  blockWithPhotoset: opts => (_.merge({
     id: `block-id-${chance.word({ length: 10 })}`,
     type: 'block-with-photoset',
     flickr: {
       photosetId: `photoset-${chance.word()}`,
     },
-  }),
+  }, opts)),
 
   contactsRequestPayload: () => ({
     name: chance.name(),

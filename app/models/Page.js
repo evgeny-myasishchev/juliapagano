@@ -21,13 +21,13 @@ class Page {
     return _.cloneDeep(this._data);
   }
 
-  get blocks() {
-    return this._data.blocks;
+  blocks(filter) {
+    return filter ? _.filter(this._data.blocks, _.matches(filter)) : this._data.blocks;
   }
 
   preloadPhotosets() {
     logger.info(`Preloading photosets for page: ${this.id}`);
-    return Promise.map(this.blocks, co.wrap(function* (block, index) {
+    return Promise.map(this.blocks(), co.wrap(function* (block, index) {
       if (_.has(block, 'flickr.photosetId')) {
         const photosetId = block.flickr.photosetId;
         logger.debug({ photosetId, blockIndex: index }, 'Flickr photoset found. Preloading');

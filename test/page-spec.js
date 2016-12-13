@@ -21,6 +21,25 @@ describe('Page', () => {
     sandbox.restore();
   });
 
+  describe('blocks', () => {
+    it('should define blocks accessor', () => {
+      const pageDoc = chance.page();
+      const page = new Page(pageDoc);
+      expect(page.blocks()).to.eql(pageDoc.blocks);
+    });
+
+    it('should return filtered blocks', () => {
+      const filterVal = `filter-val-${chance.word()}`;
+      const pageDoc = chance.page();
+      let block1;
+      let block2;
+      pageDoc.blocks.push(block1 = chance.blockWithPhotoset({ filterVal }));
+      pageDoc.blocks.push(block2 = chance.blockWithPhotoset({ filterVal }));
+      const page = new Page(pageDoc);
+      expect(page.blocks({ filterVal })).to.eql([block1, block2]);
+    });
+  });
+
   describe('get', () => {
     let pageDoc;
     beforeEach(co.wrap(function* () {
@@ -80,9 +99,9 @@ describe('Page', () => {
 
     it('should preload all flickr photosets for given page', co.wrap(function* () {
       yield page.preloadPhotosets();
-      const ps1Block = _.find(page.blocks, { id: ps1.id });
+      const ps1Block = _.find(page.blocks(), { id: ps1.id });
       expect(ps1Block.flickr.photoset).to.eql(ps1Photos);
-      const ps2Block = _.find(page.blocks, { id: ps2.id });
+      const ps2Block = _.find(page.blocks(), { id: ps2.id });
       expect(ps2Block.flickr.photoset).to.eql(ps2Photos);
       expect(getPhotosStub).to.have.callCount(2);
       expect(getPhotosStub).to.have.been.calledWith(ps1.flickr.photosetId);
