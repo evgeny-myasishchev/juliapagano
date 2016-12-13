@@ -7,7 +7,7 @@
 		<title>
 		{% block title %}
 			{% if currentPage %}
-				{{currentPage.name}} - {{contentConfig.siteTitle}}
+				{{currentPage.title}} - {{contentConfig.siteTitle}}
 			{% else %}
 				{{contentConfig.siteTitle}}
 			{% endif %}
@@ -33,7 +33,7 @@
 						<div id="navbar" class="navbar-collapse collapse">
 							<ul class="nav navbar-nav">
 								{% for page in pages %}
-								<li {% if page == currentPage %} class="active" {% endif %}>
+								<li {% if page.id == currentPage.id %} class="active" {% endif %}>
 									<a href="{{ page.path }}" {% if page.external %}title="{{page.externalHint}}"{% endif %}>
 										{{ page.name }}
 										<small>{% if page.external %}<i class="glyphicon glyphicon-new-window"></i>{% endif %}</small>

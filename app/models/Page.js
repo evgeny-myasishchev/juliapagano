@@ -17,6 +17,10 @@ class Page {
     return this._data._id;
   }
 
+  get title() {
+    return this._data.title;
+  }
+
   get data() {
     return _.cloneDeep(this._data);
   }

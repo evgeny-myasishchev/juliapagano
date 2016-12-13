@@ -19,7 +19,7 @@
 		<div role="listbox" class="carousel-inner">
 			{% for photo in carouselPhotoset.items %}
 			<div class="item {% if loop.first %}active{% endif %}">
-					<img src="{{photo.sizes['Large'].source}}" alt="{{photo.title}}">
+					<img src="{{photo.sizes[sloganBlock.flickr.size].source}}" alt="{{photo.title}}">
 				</div>
 			{% endfor %}
 		</div>
