@@ -11,6 +11,10 @@ Simplest way is to use docker:
 
 ```docker run --name mongo-dev -d -p 27017:27017 mongo:3.4```
 
+Then you have to load initial content of the site
+
+```bin/initial-data load | bunyan```
+
 # Docker
 
 ## Build image
