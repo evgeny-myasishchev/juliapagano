@@ -11,6 +11,10 @@ Simplest way is to use docker:
 
 ```docker run --name mongo-dev -d -p 27017:27017 mongo:3.4```
 
+And mongoclient
+
+```docker run -d -p 3500:3000 --name mongoclient mongoclient/mongoclient```
+
 Then you have to load initial content of the site
 
 ```bin/initial-data load | bunyan```
@@ -32,7 +36,8 @@ MAILGUN_MAIL_DOMAIN=TODO
 CONTACTS_SEND_TO=Email to send contacts form messages
 
 Create and start docker container
-docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano
+
+```docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano```
 
 Additionally restart policy like ```--restart=unless-stopped``` may need to be added.
 
