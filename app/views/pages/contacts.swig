@@ -1,6 +1,6 @@
 {% extends '../layouts/application.swig' %}
 {% block container %}
-  <h1 class='page-header'>{{currentPage.name}}</h1>
+  <h1 class='page-header'>{{currentPage.title}}</h1>
   <form id='contacts' action="index.html" method="post">
     <fieldset id='contacts-container'>
       <legend>I would love to hear from you.</legend>

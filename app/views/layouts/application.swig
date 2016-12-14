@@ -35,7 +35,7 @@
                 {% for page in pages %}
                   <li {% if page.id == currentPage.id %} class="active" {% endif %}>
                     <a href="{{ page.path }}" {% if page.external %} title="{{page.externalHint}}" {% endif %}>
-                      {{ page.name }}
+                      {{ page.title }}
                       <small>{% if page.external %}<i class="glyphicon glyphicon-new-window"></i>{% endif %}</small>
                     </a>
                   </li>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="container {% block container_classes %}{%endblock%}">
-      {% block container %}<h2>{{currentPage.name}} - Under Construction</h2>{%endblock%}
+      {% block container %}<h2>{{currentPage.title}} - Under Construction</h2>{%endblock%}
         <footer class='footer'>
           <p>&copy; Julia Pagano 2016</p>
         </footer>
