@@ -50,7 +50,7 @@
     <div class="container {% block container_classes %}{%endblock%}">
       {% block container %}<h2>{{currentPage.title}} - Under Construction</h2>{%endblock%}
         <footer class='footer'>
-          <p>&copy; Julia Pagano 2016</p>
+          <p>&copy; Julia Pagano {{dateTime.getFullYear()}}</p>
         </footer>
       </div>
       {{js('vendor')}}

@@ -58,6 +58,7 @@ function BootApp() {
       locals: {
         pages,
         contentConfig: config.content,
+        dateTime: new Date(),
       },
     });
     app.set('view cache', false);
