@@ -9,6 +9,10 @@ module.exports = {
     },
   },
 
+  mongo: {
+    url: 'mongodb://localhost/juliapagano-dev',
+  },
+
   swig: {
     cache: false,
   },

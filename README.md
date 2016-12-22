@@ -19,13 +19,47 @@ Then you have to load initial content of the site
 
 ```bin/initial-data load | bunyan```
 
-# Docker
+# Production containers
 
-## Build image
+## Mongo
 
-docker build -t juliapagano .
+**Create network first**
 
-## Run image
+```docker network create juliapagano-prod```
+
+### Create container
+
+```docker run --net juliapagano-prod --name mongo-prod -d mongo:3.4 --auth```
+
+Additionally restart policy like ```--restart=unless-stopped``` may need to be added.
+
+### Setup auth
+
+```docker exec -it mongo-prod mongo admin```
+
+** Admin user **
+
+```
+$ db.createUser({ user: 'admin', pwd: 'password', roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] });
+$ db.auth('admin', 'password');
+```
+
+** App user **
+
+```db.createUser({ user: 'juliapagano-app', pwd: 'password', roles: [ { role: "dbOwner", db: "juliapagano" } ] });```
+
+**Note:** Use custom login/password for users above
+
+
+## Web app
+
+### Build image
+
+(or pull most recent from docker hub)
+
+```docker build -t evgenymyasishchev/juliapagano .```
+
+### Run container
 
 Prepare file with env:
 NODE_ENV=production|staging
@@ -34,10 +68,11 @@ FLICKR_USER_ID=TODO
 MAILGUN_API_KEY=TODO
 MAILGUN_MAIL_DOMAIN=TODO
 CONTACTS_SEND_TO=Email to send contacts form messages
+MONGO_URL=mongodb://juliapagano-app:password@mongo-prod/juliapagano
 
 Create and start docker container
 
-```docker run -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano```
+```docker run --net juliapagano-prod -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano```
 
 Additionally restart policy like ```--restart=unless-stopped``` may need to be added.
 

@@ -12,7 +12,11 @@ module.exports = {
   },
 
   mongo: {
-    url: 'mongodb://localhost/juliapagano-dev',
+
+    // Examples:
+    // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    // mongodb://login:password@host/db
+    url: process.env.MONGO_URL,
 
     // Mongo connection settings
     // See: http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/connection-settings/
