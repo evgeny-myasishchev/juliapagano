@@ -40,13 +40,16 @@ Additionally restart policy like ```--restart=unless-stopped``` may need to be a
 ** Admin user **
 
 ```
-$ db.createUser({ user: 'admin', pwd: 'password', roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] });
+$ db.createUser({ user: 'admin', pwd: 'password', roles: [ "userAdminAnyDatabase" } ] });
 $ db.auth('admin', 'password');
 ```
 
 ** App user **
 
-```db.createUser({ user: 'juliapagano-app', pwd: 'password', roles: [ { role: "dbOwner", db: "juliapagano" } ] });```
+```
+$ use juliapagano;
+$ db.createUser({ user: 'juliapagano-app', pwd: 'password', roles: [ "dbOwner" ] });
+```
 
 **Note:** Use custom login/password for users above
 
@@ -62,6 +65,7 @@ $ db.auth('admin', 'password');
 ### Run container
 
 Prepare file with env:
+```
 NODE_ENV=production|staging
 FLICKR_API_KEY=TODO
 FLICKR_USER_ID=TODO
@@ -69,10 +73,17 @@ MAILGUN_API_KEY=TODO
 MAILGUN_MAIL_DOMAIN=TODO
 CONTACTS_SEND_TO=Email to send contacts form messages
 MONGO_URL=mongodb://juliapagano-app:password@mongo-prod/juliapagano
+```
+
+Load initial data
+
+```docker run --rm --net juliapagano-prod --env-file env.production -it evgenymyasishchev/juliapagano bin/initial-data load```
 
 Create and start docker container
 
-```docker run --net juliapagano-prod -d --env-file [path-to-env-file] -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano```
+```docker run --net juliapagano-prod -d --env-file app.env -p 8080:3000 --name juliapagano-prod evgenymyasishchev/juliapagano```
+
+Note: Feel free to use custom port instead of 8080
 
 Additionally restart policy like ```--restart=unless-stopped``` may need to be added.
 

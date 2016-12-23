@@ -8,3 +8,4 @@ public/assets
 /tmp
 /db/*.sqlite*
 /config/local-*
+app.env
