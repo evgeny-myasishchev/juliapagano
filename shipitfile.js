@@ -17,6 +17,7 @@ function createContainer(shipit) {
   const container = shipit.config.container;
   return shipit.remote([
     'docker run -d --restart=unless-stopped',
+    '--net', shipit.config.network,
     '--env-file', envFile,
     `-p ${port}:3000`,
     '--name ', container, repo,
@@ -31,11 +32,13 @@ module.exports = function (shipit) {
     },
     production: {
       workspace: './juliapagano/prod',
+      network: 'juliapagano-prod',
       container: 'juliapagano-prod',
       port: 6000,
     },
     staging: {
       workspace: './juliapagano/stage',
+      network: 'juliapagano-stage',
       container: 'juliapagano-stage',
       port: 6010,
     },
