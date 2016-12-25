@@ -32,6 +32,7 @@ module.exports = {
   flickrClient: {
     apiKey: process.env.FLICKR_API_KEY,
     userId: process.env.FLICKR_USER_ID,
+    cache: process.env.FLICKR_CACHE_ENABLED || false,
   },
 
   content: {
