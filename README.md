@@ -87,6 +87,20 @@ Note: Feel free to use custom port instead of 8080
 
 Additionally restart policy like ```--restart=unless-stopped``` may need to be added.
 
+# Production
+
+## Deploy with shipit
+
+Deploy latest image
+```
+./node_modules/.bin/shipit staging deploy
+```
+
+Deploy particular image
+```
+DOCKER_TAG=2.2.0-rc1 ./node_modules/.bin/shipit staging deploy
+```
+
 ## License
 
   [MIT](LICENSE)
