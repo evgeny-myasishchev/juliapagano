@@ -40,7 +40,7 @@ Additionally restart policy like ```--restart=unless-stopped``` may need to be a
 ** Admin user **
 
 ```
-$ db.createUser({ user: 'admin', pwd: 'password', roles: [ "userAdminAnyDatabase" } ] });
+$ db.createUser({ user: 'admin', pwd: 'password', roles: [ "userAdminAnyDatabase" ] });
 $ db.auth('admin', 'password');
 ```
 
