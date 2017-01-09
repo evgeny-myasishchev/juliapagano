@@ -1,5 +1,6 @@
-FROM node:6.2.1
+FROM node:7.2.1
 
+RUN npm config set color false
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
