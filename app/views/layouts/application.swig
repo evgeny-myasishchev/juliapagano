@@ -49,12 +49,24 @@
 
 		<div class="container {% block container_classes %}{%endblock%}">
 			{% block container %}<h2>{{currentPage.name}} - Under Construction</h2>{%endblock%}
-				<footer class='footer'>
-					<p>&copy; Julia Pagano 2016</p>
-				</footer>
-			</div>
-			{{js('vendor')}}
-			{{js('application')}}
-			{% block bottomScripts %}{%endblock%}
-		</body>
-	</html>
+			<footer class='footer'>
+				<p>&copy; Julia Pagano 2016</p>
+			</footer>
+		</div>
+		{{js('vendor')}}
+		{{js('application')}}
+		{% block bottomScripts %}{%endblock%}
+    {% if goggleAnalytics.enabled %}
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '{{goggleAnalytics.trackingId}}', 'auto');
+        ga('send', 'pageview');
+
+      </script>
+    {% endif %}
+	</body>
+</html>

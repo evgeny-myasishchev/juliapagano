@@ -56,7 +56,8 @@ const BootApp = function () {
       cache: config.get('swig.cache'),
       locals: {
         pages: pages,
-        contentConfig: config.content
+        contentConfig: config.content,
+        goggleAnalytics: config.goggleAnalytics,
       },
     });
     app.set('view cache', false);
