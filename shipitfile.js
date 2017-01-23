@@ -28,7 +28,7 @@ function createContainer(shipit) {
 module.exports = function (shipit) {
   shipit.initConfig({
     default: {
-      servers: process.env.USER + '@hbox',
+      servers: process.env.DEPLOY_SERVER || (process.env.USER + '@hbox'),
       dockerRepository: 'evgenymyasishchev/juliapagano'
     },
     production: {
