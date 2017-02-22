@@ -1,31 +1,28 @@
-'use strict';
-
 const _ = require('lodash');
 const boot = require('../app/boot');
 const chai = require('chai');
 const chance = require('./mocks/chance');
 const co = require('co');
 const config = require('config');
+const db = require('../app/lib/db');
 const emailProvider = require('../app/lib/emailProvider');
 const express = require('express');
 const expressSpy = require('./support/express-spy');
 const pages = require('../app/lib/pages');
-const photoset = require('../app/models/photoset');
-const Promise = require('bluebird');
 const request = require('supertest-as-promised');
 const router = require('../app/routes');
 const sinon = require('sinon');
+const Page = require('../app/models/Page');
 
 const expect = chai.expect;
 
-describe('routes', function () {
+describe('routes', () => {
   global.loggingHookup();
 
-  const timestamp = new Date().getTime();
   let app;
   before(() => {
     app = express();
-    app.use(expressSpy);
+    app.use(expressSpy.create());
     boot.newApp()
       .withLogging()
       .withRoutes(router)
@@ -33,152 +30,72 @@ describe('routes', function () {
       .start(app);
   });
 
+  before(() => co(() => db.connect()));
+  after(() => co(() => db.close()));
+
   const sandbox = sinon.sandbox.create();
+
+  beforeEach(() => {
+    expressSpy.stubRes = false;
+  });
 
   afterEach(() => {
     sandbox.restore();
   });
 
-  describe('GET /', function () {
+  describe('dynamic pages', () => {
+    let pageDoc;
+    let collection;
+    beforeEach(co.wrap(function* () {
+      expressSpy.stubRes = true;
+      pageDoc = chance.page();
 
-    const dummyPhotoset = [
-      { photo1: timestamp + 100 },
-      { photo2: timestamp + 110 }
-    ];
-    beforeEach(() => {
-      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
-        expect(photosetId).to.eql(pages.home.carousel.photosetId);
-        return Promise.resolve(dummyPhotoset);
-      });
-    });
+      collection = db.collection('pages');
+      yield collection.drop().catch({ code: 26 }, _.noop);
+      yield collection.insert(pageDoc);
 
-    it('should render home page with data', function (done) {
-      request(app).get('/').expect(200, function () {
-        expect(photoset.getPhotos).to.have.been.calledWith(pages.home.carousel.photosetId);
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/home',
-          sinon.match({ currentPage: pages.home, carouselPhotoset: dummyPhotoset }));
-        done();
-      });
-    });
+      sandbox.spy(Page, 'get');
+      sandbox.stub(Page.prototype, 'preloadPhotosets').resolves();
+    }));
 
-    it('should respond with error if failed to get photoset', function (done) {
-      photoset.getPhotos.restore();
-      sandbox.stub(photoset, 'getPhotos', () => Promise.reject('Unexpected error'));
-      request(app).get('/').expect(500, done);
-    });
-  });
+    it('should get page from db, prelod photosets and render it', co.wrap(function* () {
+      yield request(app).get(`/${pageDoc._id}`).expect(200);
+      expect(Page.get).to.have.been.calledWith(pageDoc._id);
+      expect(Page.prototype.preloadPhotosets).to.have.callCount(1);
+      const page = new Page(pageDoc);
+      expect(expressSpy.last.res.render).to.have.been.calledWith(`pages/${page.id}`, sinon.match({ currentPage: page }));
+    }));
 
-  describe('GET /about', function () {
-    const dummySelfiePhotoset = {
-      items: [
-        { photo1: timestamp + 100, sizes: { Medium: { source: 'fake' } } },
-        { photo2: timestamp + 110 }
-      ]
-    };
-    beforeEach(() => {
-      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
-        expect(photosetId).to.eql(pages.about.selfie.photosetId);
-        return Promise.resolve(dummySelfiePhotoset);
-      });
-    });
+    it('render home page for root', co.wrap(function* () {
+      const homeDoc = chance.page({ _id: 'home' });
+      yield collection.insert(homeDoc);
 
-    it('should render about page', function (done) {
-      request(app).get('/about')
-        .expect(200)
-        .expect(function () {
-          expect(expressSpy.last.res.render).to.have.been.calledWith('pages/about', sinon.match({
-            currentPage: pages.about,
-            selfie: dummySelfiePhotoset.items[0]
-          }));
-        })
-        .end(done);
-    });
-  });
+      yield request(app).get('/').expect(200);
+      expect(Page.get).to.have.been.calledWith(homeDoc._id);
+      expect(Page.prototype.preloadPhotosets).to.have.callCount(1);
+      const page = new Page(homeDoc);
+      expect(expressSpy.last.res.render).to.have.been.calledWith(`pages/${page.id}`, sinon.match({ currentPage: page }));
+    }));
 
-  describe('GET /portfolio', function () {
-    const dummyPhotoset = [
-      { photo1: timestamp + 100 },
-      { photo2: timestamp + 110 }
-    ];
-    beforeEach(() => {
-      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
-        expect(photosetId).to.eql(pages.portfolio.gallery.photosetId);
-        return Promise.resolve(dummyPhotoset);
-      });
-    });
+    it('should respond with 404 if no page found',
+      () => request(app).get(`/${pageDoc._id}-not-existing`).expect(404)
+    );
 
-    it('should render portfolio page with portfolio photoset', function (done) {
-      request(app).get('/portfolio').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/portfolio', sinon.match({
-          currentPage: pages.portfolio,
-          galleryPhotoset: dummyPhotoset
-        }));
-        done();
-      });
-    });
-  });
-
-  describe('GET /kind-words', function () {
-    it('should render kind-words page', function (done) {
-      request(app).get('/kind-words').expect(200, function () {
-        expect(expressSpy.last.res.render).to.have.been.calledWith('pages/kind-words', sinon.match({ currentPage: pages['kind-words'] }));
-        done();
-      });
-    });
-  });
-
-  describe('GET /info-and-prices', function () {
-    it('should render info-and-prices page with photoset for each price', co.wrap(function * () {
-      const page = pages['info-and-prices'];
-      const photosets = _.keyBy(
-        page.prices.map((price) => ({ dummyPhotoset: price.photosetId })),
-        (photoset) => photoset.dummyPhotoset
-      );
-
-      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
-        return Promise.resolve(photosets[photosetId]);
-      });
-
-      yield request(app).get('/info-and-prices').expect(200);
-      expect(expressSpy.last.res.render).to.have.been
-        .calledWith('pages/info-and-prices', sinon.match({
-          currentPage: page,
-          photosets
-        }));
+    it('not attempt to render nested pages', co.wrap(function* () {
+      yield request(app).get(`/${chance.word()}/${chance.word()}`).expect(404);
+      expect(Page.get).to.have.callCount(0);
+      expect(expressSpy.last.res.render).to.have.callCount(0);
     }));
   });
 
-  describe('GET /special-offers', function () {
-    it('should render special-offers page with photoset for each price', co.wrap(function * () {
-      const page = pages['special-offers'];
-      const dummyPhotoset = [
-        { photo1: timestamp + 100 },
-        { photo2: timestamp + 110 }
-      ];
-      sandbox.stub(photoset, 'getPhotos', function (photosetId) {
-        expect(photosetId).to.eql(page.photosetId);
-        return Promise.resolve(dummyPhotoset);
-      });
-
-      yield request(app).get('/special-offers').expect(200);
-      expect(expressSpy.last.res.render).to.have.been
-        .calledWith('pages/special-offers', sinon.match({
-          currentPage: page,
-          photoset: page.photosetId ? dummyPhotoset : undefined
-        }));
-    }));
-  });
-
-  describe('GET /contacts', function () {
-    it('should render contacts page', function () {
-      return request(app).get('/contacts').expect(200)
+  describe('GET /contacts', () => {
+    it('should render contacts page', () => request(app).get('/contacts').expect(200)
         .then(() => {
           expect(expressSpy.last.res.render).to.have.been.calledWith('pages/contacts', sinon.match({ currentPage: pages.contacts }));
-        });
-    });
+        }));
   });
 
-  describe('POST /contacts', function () {
+  describe('POST /contacts', () => {
     let sendEmailStub;
     let payload;
     beforeEach(() => {
@@ -186,7 +103,7 @@ describe('routes', function () {
       sendEmailStub = sandbox.stub(emailProvider, 'sendEmail').resolves({});
     });
 
-    it('should send contacts and thanks emails', co.wrap(function * () {
+    it('should send contacts and thanks emails', co.wrap(function* () {
       yield request(app).post('/contacts').send(payload).expect(200);
       expect(sendEmailStub).to.have.callCount(2);
       expect(sendEmailStub).to.have.been.calledWith(sinon.match({
@@ -196,7 +113,7 @@ describe('routes', function () {
           expect(template.path).to.eql('contacts');
           expect(template.data).to.eql(payload);
           return true;
-        })
+        }),
       }));
       expect(sendEmailStub).to.have.been.calledWith(sinon.match({
         from: config.get('contacts.sendTo'),
@@ -205,11 +122,11 @@ describe('routes', function () {
           expect(template.path).to.eql('contactsThanks');
           expect(template.data).to.eql(payload);
           return true;
-        })
+        }),
       }));
     }));
 
-    it('should respond with 400 error if body schema validation fails', function () {
+    it('should respond with 400 error if body schema validation fails', () => {
       delete payload.name;
       delete payload.email;
       return request(app).post('/contacts').send(payload).expect(400, /required property 'name'/);

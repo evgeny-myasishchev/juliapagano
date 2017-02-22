@@ -3,5 +3,5 @@ const config = require('config');
 
 module.exports = {
   name: chance.name(),
-  email: config.get('contacts.sendTo')
+  email: config.get('contacts.sendTo'),
 };

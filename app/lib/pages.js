@@ -1,40 +1,46 @@
-const prices = require('../data/prices');
+// TODO: Get rid of this and read from mongo
 
 module.exports = {
   home: {
-    name: 'Home',
+    id: 'home',
+    title: 'Home',
     path: '/',
-    carousel: { photosetId: '72157669540784146' }
   },
   about: {
-    name: 'About',
+    id: 'about',
+    title: 'About',
     path: '/about',
-    selfie: { photosetId: '72157669781414392' }
   },
   portfolio: {
-    name: 'Portfolio',
+    id: 'portfolio',
+    title: 'Portfolio',
     path: '/portfolio',
-    gallery: { photosetId: '72157667031701733' }
   },
   'kind-words': {
-    name: 'Kind Words',
-    path: '/kind-words'
+    id: 'kind-words',
+    title: 'Kind Words',
+    path: '/kind-words',
   },
   'info-and-prices': {
-    name: 'Info and Prices',
+    id: 'info-and-prices',
+    title: 'Info and Prices',
     path: '/info-and-prices',
-    prices
   },
   'special-offers': {
-    name: 'Special Offers',
+    id: 'special-offers',
+    title: 'Special Offers',
     path: '/special-offers',
-    photosetId: '72157673194132624'
   },
   blog: {
-    name: 'Blog',
+    id: 'blog',
+    title: 'Blog',
     path: 'http://juliapagano.blogspot.co.uk/',
     external: true,
-    externalHint: 'This opens my blog which is a different site.'
+    externalHint: 'This opens my blog which is a different site.',
   },
-  contacts: { name: 'Contacts', path: '/contacts' }
+  contacts: {
+    id: 'contacts',
+    title: 'Contacts',
+    path: '/contacts',
+  },
 };

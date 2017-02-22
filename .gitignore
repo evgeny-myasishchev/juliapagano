@@ -1,5 +1,6 @@
 # Remember to make sure .dockerignore is in sync with this file
 
+.eslintcache
 npm-debug.log
 node_modules
 public/assets
@@ -7,3 +8,4 @@ public/assets
 /tmp
 /db/*.sqlite*
 /config/local-*
+app.env

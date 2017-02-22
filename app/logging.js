@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const bunyan = require('bunyan');
 const config = require('config');
@@ -11,25 +9,26 @@ const rootCfg = { name: loggingCfg.name, streams: [] };
 
 if (loggingCfg.stdout.enabled) {
   if (loggingCfg.stdout.filterAssets) {
-    //TODO: Extend bunyan with filtering support
+    // TODO: Extend bunyan with filtering support
+    // TODO: Integrate continuations to support requests logging
     rootCfg.streams.push({
       type: 'raw',
       stream: {
-        write: function (data) {
+        write(data) {
           const url = _.get(data, 'req.url');
-          if (url && url.startsWith('/assets')) return false;
-          if (_.get(data, 'res.statusCode') === 304) return false; //asset responses are very often 304
+          if (url && url.startsWith('/assets')) return;
+          if (_.get(data, 'res.statusCode') === 304) return; // asset responses are very often 304
 
           process.stdout.write(JSON.stringify(data));
           process.stdout.write('\n');
-        }
+        },
       },
-      level: loggingCfg.stdout.level || 'debug'
+      level: loggingCfg.stdout.level || 'debug',
     });
   } else {
     rootCfg.streams.push({
       stream: process.stdout,
-      level: loggingCfg.stdout.level || 'debug'
+      level: loggingCfg.stdout.level || 'debug',
     });
   }
 }
@@ -42,7 +41,7 @@ if (loggingCfg.file.enabled) {
 const rootLogger = bunyan.createLogger(rootCfg);
 
 module.exports = {
-  getLogger: function () {
+  getLogger() {
     return rootLogger;
-  }
+  },
 };

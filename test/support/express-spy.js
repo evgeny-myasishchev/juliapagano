@@ -1,15 +1,21 @@
-'use strict';
-
 const sinon = require('sinon');
 
-const expressSpy = (function () {
-  const fn = function (req, res, next) {
-    fn.last = { req, res };
-    sinon.spy(res, 'render');
-    next();
-  };
-
-  return fn;
-})();
-
-module.exports = expressSpy;
+module.exports = {
+  stubRes: false,
+  last: null,
+  create() {
+    const self = this;
+    const fn = function (req, res, next) {
+      self.last = { req, res };
+      if (self.stubRes) {
+        sinon.stub(res, 'render', () => {
+          res.end('Stub');
+        });
+      } else {
+        sinon.spy(res, 'render');
+      }
+      next();
+    };
+    return fn;
+  },
+};

@@ -1,11 +1,12 @@
-'use strict';
-
-const config = require('config').get('cache');
+const config = require('config');
 const LRU = require('lru-cache');
+
+const moduleCfg = config.get('cache');
+
 const cache = LRU({
-    max: config.max,
-    maxAge: config.maxAgeMs
-  });
+  max: moduleCfg.max,
+  maxAge: moduleCfg.maxAgeMs,
+});
 
 function set(key, value, maxAge) {
   return cache.set(key, value, maxAge);
@@ -24,8 +25,8 @@ function has(key) {
 }
 
 module.exports = {
-    set: set,
-    get: get,
-    reset: reset,
-    has: has
-  };
+  set,
+  get,
+  reset,
+  has,
+};

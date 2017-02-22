@@ -1,0 +1,7 @@
+# /node_modules/* and /bower_components/* ignored by default
+
+/vendor/assets/*
+
+# Ignore built files except build/index.js
+/tmp/*
+/public/assets/*

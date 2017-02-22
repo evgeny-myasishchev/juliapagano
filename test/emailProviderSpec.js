@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const chai = require('chai');
 const chance = require('./mocks/chance');
@@ -22,44 +20,46 @@ describe('emailProvider', () => {
   });
 
   describe('sendEmail', () => {
-    it('should post email data to mailgun', co.wrap(function * () {
+    it('should post email data to mailgun', co.wrap(function* () {
       const subject = `Subj ${chance.word()}`;
       const html = `Body html ${chance.word()}`;
       const text = `Body txt ${chance.word()}`;
       const template = new EmailTemplate('some-path', { fake: 'data' });
       sandbox.stub(template, 'render').resolves({
-        html, text, subject
+        html, text, subject,
       });
       const from = chance.email();
       const to = chance.email();
-      let scope = nock(mailgunCfg.baseUrl)
+      const scope = nock(mailgunCfg.baseUrl)
         .post(`/${mailgunCfg.domain}/messages`)
         .reply(200, function (url, body) {
-          const formData = _.fromPairs(decodeURIComponent(body).split('&').map((part) => part.split('=')));
+          const formData = _.fromPairs(decodeURIComponent(body).split('&').map(part => part.split('=')));
           expect(formData).to.eql({
-            from, to,
+            from,
+            to,
             subject: `${config.get('emailProvider.subjectPrefix')}${subject}`,
-            text, html
+            text,
+            html,
           });
-          expect(this.req.headers.authorization).to.eql('Basic ' + Buffer.from([
-            mailgunCfg.user, mailgunCfg.key
-          ].join(':')).toString('base64'));
+          expect(this.req.headers.authorization).to.eql(`Basic ${Buffer.from([
+            mailgunCfg.user, mailgunCfg.key,
+          ].join(':')).toString('base64')}`);
         });
 
       yield emailProvider.sendEmail({ from, to, template });
       scope.done();
     }));
 
-    it('should have no subject prefix if it is null in config', co.wrap(function * () {
+    it('should have no subject prefix if it is null in config', co.wrap(function* () {
       const subject = `Subj ${chance.word()}`;
       const template = new EmailTemplate('some-path', { fake: 'data' });
       sandbox.stub(template, 'render').resolves({
-        html: chance.word(), text: chance.word(), subject
+        html: chance.word(), text: chance.word(), subject,
       });
-      let scope = nock(mailgunCfg.baseUrl)
+      const scope = nock(mailgunCfg.baseUrl)
         .post(`/${mailgunCfg.domain}/messages`)
-        .reply(200, function (url, body) {
-          const formData = _.fromPairs(decodeURIComponent(body).split('&').map((part) => part.split('=')));
+        .reply(200, (url, body) => {
+          const formData = _.fromPairs(decodeURIComponent(body).split('&').map(part => part.split('=')));
           expect(formData.subject).to.eql(subject);
         });
 
@@ -67,7 +67,7 @@ describe('emailProvider', () => {
         subjectPrefix: null,
         from: chance.email(),
         to: chance.email(),
-        template
+        template,
       });
       scope.done();
     }));

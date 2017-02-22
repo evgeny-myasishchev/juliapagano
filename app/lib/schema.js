@@ -1,6 +1,6 @@
-'use strict';
+const Ajv = require('ajv');
 
-const ajv = new (require('ajv'))();
+const ajv = new Ajv();
 
 function validateRequest(schema) {
   return function (req, res, next) {
@@ -12,11 +12,11 @@ function validateRequest(schema) {
       return res.status(400).end(errors);
     }
 
-    next();
+    return next();
   };
 }
 
 module.exports = {
   add: ajv.addSchema,
-  validateRequest: validateRequest
+  validateRequest,
 };

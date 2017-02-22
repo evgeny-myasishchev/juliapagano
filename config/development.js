@@ -1,15 +1,19 @@
 module.exports = {
   logging: {
     stdout: {
-      filterAssets: true
+      filterAssets: true,
     },
     file: {
       enabled: true,
-      path: 'log/development.log'
-    }
+      path: 'log/development.log',
+    },
+  },
+
+  mongo: {
+    url: 'mongodb://localhost/juliapagano-dev',
   },
 
   swig: {
-    cache: false
-  }
+    cache: false,
+  },
 };
