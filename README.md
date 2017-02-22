@@ -73,6 +73,7 @@ MAILGUN_API_KEY=TODO
 MAILGUN_MAIL_DOMAIN=TODO
 CONTACTS_SEND_TO=Email to send contacts form messages
 MONGO_URL=mongodb://juliapagano-app:password@mongo-prod/juliapagano
+GA_TRACKING_ID=Goggle Analytics TrackingId (optional)
 ```
 
 Load initial data

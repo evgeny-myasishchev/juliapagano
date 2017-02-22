@@ -77,4 +77,9 @@ module.exports = {
   swig: {
     cache: 'memory',
   },
+
+  goggleAnalytics: {
+    enabled: !!process.env.GA_TRACKING_ID,
+    trackingId: process.env.GA_TRACKING_ID,
+  },
 };

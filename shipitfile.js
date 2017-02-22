@@ -28,7 +28,7 @@ module.exports = function (shipit) {
   const tag = process.env.DOCKER_TAG || 'latest';
   shipit.initConfig({
     default: {
-      servers: `${process.env.USER}@hbox`,
+      servers: process.env.DEPLOY_SERVER || (`${process.env.USER}@hbox`),
       dockerRepository: `evgenymyasishchev/juliapagano:${tag}`,
     },
     production: {

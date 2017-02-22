@@ -59,6 +59,7 @@ function BootApp() {
         pages,
         contentConfig: config.content,
         dateTime: new Date(),
+        goggleAnalytics: config.goggleAnalytics,
       },
     });
     app.set('view cache', false);
