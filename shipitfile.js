@@ -12,16 +12,16 @@ function containerRestart(shipit) {
 
 function createContainer(shipit) {
   const envFile = `${shipit.config.workspace}/app.env`;
+  const deployEnv = `${shipit.config.workspace}/deploy.env`;
   const port = shipit.config.port;
   const repo = shipit.config.dockerRepository;
   const container = shipit.config.container;
-  return shipit.remote([
-    'docker run -d --restart=unless-stopped',
-    '--net', shipit.config.network,
-    '--env-file', envFile,
-    `-p ${port}:3000`,
-    '--name ', container, repo,
-  ].join(' '));
+  return shipit.remote(
+`source ${deployEnv}; docker run \\$DOCKER_OPTS -d --restart=unless-stopped \
+--net ${shipit.config.network} \
+--env-file ${envFile} \
+-p ${port}:3000 \
+--name ${container} ${repo}`);
 }
 
 module.exports = function (shipit) {
