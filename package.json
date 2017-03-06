@@ -1,6 +1,6 @@
 {
   "name": "juliapagano",
-  "version": "2.2.0",
+  "version": "2.2.1-rc1",
   "description": "Web site of Julia Pagano",
   "repository": "github:evgeny-myasishchev/juliapagano",
   "main": "server.js",
