@@ -5,6 +5,7 @@ const Promise = require('bluebird');
 const sinonChai = require('sinon-chai');
 const logging = require('../../app/logging');
 require('sinon-as-promised')(Promise);
+require('co-mocha');
 
 chai.use(sinonChai);
 

@@ -5,10 +5,11 @@ const home = require('./initial-data/home');
 const infoAndPrices = require('./initial-data/info-and-prices');
 const kindWords = require('./initial-data/kind-words');
 const portfolio = require('./initial-data/portfolio');
-const specialOffers = require('./initial-data/special-offers');
+const specialOffersOffer1 = require('./initial-data/special-offers-offer1');
+const specialOffersOffer2 = require('./initial-data/special-offers-offer2');
 
 module.exports = {
   pages: [
-    about, home, infoAndPrices, kindWords, portfolio, specialOffers,
+    about, home, infoAndPrices, kindWords, portfolio, specialOffersOffer1, specialOffersOffer2,
   ],
 };

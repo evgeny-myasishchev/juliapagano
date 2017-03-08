@@ -17,6 +17,14 @@ describe('Page', () => {
 
   before(() => co(() => db.connect()));
   after(() => co(() => db.close()));
+
+  let collection;
+
+  beforeEach(function* () {
+    collection = db.collection('pages');
+    yield collection.drop().catch({ code: 26 }, _.noop);
+  });
+
   afterEach(() => {
     sandbox.restore();
   });
@@ -44,9 +52,6 @@ describe('Page', () => {
     let pageDoc;
     beforeEach(co.wrap(function* () {
       pageDoc = chance.page();
-
-      const collection = db.collection('pages');
-      yield collection.drop().catch({ code: 26 }, _.noop);
       yield collection.insert(pageDoc);
     }));
 
@@ -66,6 +71,39 @@ describe('Page', () => {
       expect(error).to.be.an.instanceof(errors.ResourceNotFound);
       expect(error.message).to.eql(`Page ${unknownId} not found`);
     }));
+  });
+
+  describe('getBySection', () => {
+    it('should return pages found by given section', function* () {
+      const section1 = `section-${chance.word()}`;
+      const section2 = `section-${chance.word()}`;
+
+      const page11 = chance.page({ section: section1 });
+      const page12 = chance.page({ section: section1 });
+      const page21 = chance.page({ section: section2 });
+      const page22 = chance.page({ section: section2 });
+
+      yield collection.insert([page11, page12, page21, page22]);
+
+      const sect1Pages = yield Page.getBySection(section1);
+      expect(sect1Pages).to.eql([page11, page12].map(p => new Page(p)));
+
+      const sect2Pages = yield Page.getBySection(section2);
+      expect(sect2Pages).to.eql([page21, page22].map(p => new Page(p)));
+    });
+
+    it('should sort found pages by order', function* () {
+      const section1 = `section-${chance.word()}`;
+
+      const page2 = chance.page({ title: 'Page 2', order: 2, section: section1 });
+      const page1 = chance.page({ title: 'Page 1', order: 1, section: section1 });
+
+      yield collection.insert([page2, page1]);
+
+      const pages = yield Page.getBySection(section1);
+      expect(pages[0].data).to.eql(page1);
+      expect(pages[1].data).to.eql(page2);
+    });
   });
 
   describe('preloadPhotosets', () => {

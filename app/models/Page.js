@@ -49,6 +49,16 @@ class Page {
     logger.info(`Got page data from db id=${id}`);
     return new Page(pageData);
   }
+
+  static* getBySection(section) {
+    const pages = yield db.collection('pages')
+      .find({ section })
+      .sort({ order: 1 })
+      .map(doc => new Page(doc))
+      .toArray();
+    logger.debug(`Found ${pages.length} pages by section: ${section}`);
+    return pages;
+  }
 }
 
 module.exports = Page;
