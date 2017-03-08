@@ -110,6 +110,25 @@ describe('routes', () => {
     });
   });
 
+  describe('GET /special-offers/*', () => {
+    beforeEach(() => {
+      sandbox.spy(Page, 'get');
+      sandbox.stub(Page.prototype, 'preloadPhotosets').resolves();
+    });
+
+    it('should render special particular special offer', function* () {
+      const page1 = chance.specialOfferPage();
+      yield collection.insert(page1);
+      yield request(app).get(`/${page1._id}`).expect(200);
+      expect(expressSpy.last.res.render).to.have.been.calledWith('pages/special-offer', sinon.match({
+        parentPage: pages['special-offers'],
+        currentPage: new Page(page1),
+      }));
+      expect(Page.get).to.have.been.calledWith(page1._id);
+      expect(Page.prototype.preloadPhotosets).to.have.callCount(1);
+    });
+  });
+
   describe('GET /contacts', () => {
     it('should render contacts page', () => request(app).get('/contacts').expect(200)
         .then(() => {

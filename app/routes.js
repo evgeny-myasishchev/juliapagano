@@ -26,11 +26,23 @@ router.get('/special-offers', invoke(function* (req, res) {
   const currentPage = pages['special-offers'];
   const specialOffers = yield Page.getBySection(currentPage.id);
   for (const offer of specialOffers) {
-    yield offer.preloadPhotosets(); // TODO: Unit test
+    yield offer.preloadPhotosets();
   }
   res.render('pages/special-offers', {
     currentPage,
     specialOffers,
+  });
+}));
+
+router.get('/special-offers/*', invoke(function* (req, res) {
+  const pageId = req.path.substr(1, req.path.length);
+  req.log.info(`Rendering special offer page: ${pageId}`);
+  const currentPage = yield Page.get(pageId);
+  currentPage.preloadPhotosets();
+  const parentPage = pages['special-offers'];
+  res.render('pages/special-offer', {
+    parentPage,
+    currentPage,
   });
 }));
 

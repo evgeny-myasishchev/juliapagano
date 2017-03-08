@@ -15,7 +15,10 @@ chance.mixin({
   }, opts)),
 
   specialOfferPage: (opts) => {
-    const page = _.merge(chance.page(), { section: 'special-offers' }, opts);
+    const page = _.merge(chance.page(), {
+      _id: `special-offers/${chance.word()}`,
+      section: 'special-offers',
+    }, opts);
     page.blocks.push({
       type: 'special-offer',
       flickr: {
