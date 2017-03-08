@@ -25,6 +25,9 @@ function invoke(generator) {
 router.get('/special-offers', invoke(function* (req, res) {
   const currentPage = pages['special-offers'];
   const specialOffers = yield Page.getBySection(currentPage.id);
+  for (const offer of specialOffers) {
+    yield offer.preloadPhotosets(); // TODO: Unit test
+  }
   res.render('pages/special-offers', {
     currentPage,
     specialOffers,
