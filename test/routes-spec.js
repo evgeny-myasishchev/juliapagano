@@ -34,9 +34,12 @@ describe('routes', () => {
   after(() => co(() => db.close()));
 
   const sandbox = sinon.sandbox.create();
+  let collection;
 
-  beforeEach(() => {
+  beforeEach(function* () {
     expressSpy.stubRes = false;
+    collection = db.collection('pages');
+    yield collection.drop().catch({ code: 26 }, _.noop);
   });
 
   afterEach(() => {
@@ -45,13 +48,10 @@ describe('routes', () => {
 
   describe('dynamic pages', () => {
     let pageDoc;
-    let collection;
     beforeEach(co.wrap(function* () {
       expressSpy.stubRes = true;
       pageDoc = chance.page();
 
-      collection = db.collection('pages');
-      yield collection.drop().catch({ code: 26 }, _.noop);
       yield collection.insert(pageDoc);
 
       sandbox.spy(Page, 'get');
@@ -86,6 +86,21 @@ describe('routes', () => {
       expect(Page.get).to.have.callCount(0);
       expect(expressSpy.last.res.render).to.have.callCount(0);
     }));
+  });
+
+  describe('GET /special-offers', () => {
+    it('should get special offers and render them', function* () {
+      const page1 = chance.page({ section: 'special-offers' });
+      const page2 = chance.page({ section: 'special-offers' });
+      const page3 = chance.page({ section: 'special-offers' });
+      const all = [page1, page2, page3];
+      yield collection.insert(all);
+      yield request(app).get('/special-offers').expect(200);
+      expect(expressSpy.last.res.render).to.have.been.calledWith('pages/special-offers', sinon.match({
+        currentPage: pages['special-offers'],
+        specialOffers: all.map(offer => new Page(offer)),
+      }));
+    });
   });
 
   describe('GET /contacts', () => {

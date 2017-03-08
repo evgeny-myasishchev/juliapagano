@@ -22,6 +22,15 @@ function invoke(generator) {
   };
 }
 
+router.get('/special-offers', invoke(function* (req, res) {
+  const currentPage = pages['special-offers'];
+  const specialOffers = yield Page.getBySection(currentPage.id);
+  res.render('pages/special-offers', {
+    currentPage,
+    specialOffers,
+  });
+}));
+
 router.get('/contacts', (req, res) => {
   res.render('pages/contacts', { currentPage: pages.contacts });
 });
