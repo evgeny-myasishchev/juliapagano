@@ -89,10 +89,15 @@ describe('routes', () => {
   });
 
   describe('GET /special-offers', () => {
+    beforeEach(() => {
+      sandbox.spy(Page, 'getBySection');
+      sandbox.stub(Page.prototype, 'preloadPhotosets').resolves();
+    });
+
     it('should get special offers and render them', function* () {
-      const page1 = chance.page({ section: 'special-offers' });
-      const page2 = chance.page({ section: 'special-offers' });
-      const page3 = chance.page({ section: 'special-offers' });
+      const page1 = chance.specialOfferPage();
+      const page2 = chance.specialOfferPage();
+      const page3 = chance.specialOfferPage();
       const all = [page1, page2, page3];
       yield collection.insert(all);
       yield request(app).get('/special-offers').expect(200);
@@ -100,6 +105,8 @@ describe('routes', () => {
         currentPage: pages['special-offers'],
         specialOffers: all.map(offer => new Page(offer)),
       }));
+      expect(Page.getBySection).to.have.been.calledWith('special-offers');
+      expect(Page.prototype.preloadPhotosets).to.have.callCount(3);
     });
   });
 

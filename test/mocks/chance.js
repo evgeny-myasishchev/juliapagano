@@ -14,6 +14,21 @@ chance.mixin({
     ],
   }, opts)),
 
+  specialOfferPage: (opts) => {
+    const page = _.merge(chance.page(), { section: 'special-offers' }, opts);
+    page.blocks.push({
+      type: 'special-offer',
+      flickr: {
+        photoset: {
+          items: [{
+            sizes: { 'Medium 640': {} },
+          }],
+        },
+      },
+    });
+    return page;
+  },
+
   blockWithPhotoset: opts => (_.merge({
     id: `block-id-${chance.word({ length: 10 })}`,
     type: 'block-with-photoset',
