@@ -38,7 +38,7 @@ router.get('/special-offers/*', invoke(function* (req, res) {
   const pageId = req.path.substr(1, req.path.length);
   req.log.info(`Rendering special offer page: ${pageId}`);
   const currentPage = yield Page.get(pageId);
-  currentPage.preloadPhotosets();
+  yield currentPage.preloadPhotosets();
   const parentPage = pages['special-offers'];
   res.render('pages/special-offer', {
     parentPage,
