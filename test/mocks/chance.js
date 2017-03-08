@@ -22,9 +22,13 @@ chance.mixin({
     page.blocks.push({
       type: 'special-offer',
       flickr: {
+        size: 'Medium 640',
         photoset: {
           items: [{
-            sizes: { 'Medium 640': {} },
+            sizes: {
+              'Medium 640': {},
+              Original: {},
+            },
           }],
         },
       },
