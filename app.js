@@ -1,11 +1,11 @@
 const boot = require('./app/boot');
 const express = require('express');
-const routes = require('./app/routes');
+const content = require('./app/controllers/content');
 
 boot.newApp()
   .withLogging()
   .withMongo()
-  .withRoutes(routes)
+  .withRoutes(content)
   .withViewEngine()
   .withAssets()
   .withServer()

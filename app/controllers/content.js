@@ -1,16 +1,16 @@
 const _ = require('lodash');
 const co = require('co');
 const config = require('config');
-const emailProvider = require('./lib/emailProvider');
-const EmailTemplate = require('./lib/EmailTemplate');
+const emailProvider = require('../lib/emailProvider');
+const EmailTemplate = require('../lib/EmailTemplate');
 const express = require('express');
-const Page = require('./models/Page');
-const pages = require('./lib/pages');
-const schema = require('./lib/schema');
+const Page = require('../models/Page');
+const pages = require('../lib/pages');
+const schema = require('../lib/schema');
 
 const router = express.Router();
 
-schema.add(require('./schema/contactRequest'), 'contactRequest');
+schema.add(require('../schema/contactRequest'), 'contactRequest');
 
 function invoke(generator) {
   return function invokeWrapper(req, res) {

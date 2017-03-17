@@ -1,22 +1,24 @@
 const _ = require('lodash');
-const boot = require('../app/boot');
-const chai = require('chai');
-const chance = require('./mocks/chance');
 const co = require('co');
 const config = require('config');
-const db = require('../app/lib/db');
-const emailProvider = require('../app/lib/emailProvider');
 const express = require('express');
-const expressSpy = require('./support/express-spy');
-const pages = require('../app/lib/pages');
+
+const chai = require('chai');
 const request = require('supertest-as-promised');
-const router = require('../app/routes');
 const sinon = require('sinon');
-const Page = require('../app/models/Page');
+
+const Page = require('../../app/models/Page');
+const boot = require('../../app/boot');
+const chance = require('./../mocks/chance');
+const db = require('../../app/lib/db');
+const emailProvider = require('../../app/lib/emailProvider');
+const expressSpy = require('./../support/express-spy');
+const pages = require('../../app/lib/pages');
+const router = require('../../app/controllers/content');
 
 const expect = chai.expect;
 
-describe('routes', () => {
+describe('controller/content', () => {
   global.loggingHookup();
 
   let app;
