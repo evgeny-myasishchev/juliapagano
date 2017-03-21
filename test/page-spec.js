@@ -74,7 +74,7 @@ describe('Page', () => {
   });
 
   describe('getAll', () => {
-    it.only('return all pages', function* () {
+    it('return all pages', function* () {
       const page11 = chance.page();
       const page12 = chance.page();
       const page21 = chance.page();
