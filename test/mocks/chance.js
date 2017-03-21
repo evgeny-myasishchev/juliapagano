@@ -5,6 +5,7 @@ chance.mixin({
   page: opts => (_.merge({
     _id: `page-${chance.word()}`,
     title: `Title ${chance.word()}`,
+    order: chance.integer(),
     blocks: [
       {
         type: `block-type-${chance.word()}`,
