@@ -91,10 +91,10 @@ describe('Page', () => {
       const section1 = `section-${chance.word()}`;
       const section2 = `section-${chance.word()}`;
 
-      const page11 = chance.page({ section: section1 });
-      const page12 = chance.page({ section: section1 });
-      const page21 = chance.page({ section: section2 });
-      const page22 = chance.page({ section: section2 });
+      const page11 = chance.page({ section: section1, order: 1 });
+      const page12 = chance.page({ section: section1, order: 2 });
+      const page21 = chance.page({ section: section2, order: 1 });
+      const page22 = chance.page({ section: section2, order: 2 });
 
       yield collection.insert([page11, page12, page21, page22]);
 

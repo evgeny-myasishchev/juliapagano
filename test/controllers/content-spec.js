@@ -100,7 +100,7 @@ describe('controller/content', () => {
       const page1 = chance.specialOfferPage();
       const page2 = chance.specialOfferPage();
       const page3 = chance.specialOfferPage();
-      const all = [page1, page2, page3];
+      const all = _.sortBy([page1, page2, page3], p => p.order);
       yield collection.insert(all);
       yield request(app).get('/special-offers').expect(200);
       expect(expressSpy.last.res.render).to.have.been.calledWith('pages/special-offers', sinon.match({
