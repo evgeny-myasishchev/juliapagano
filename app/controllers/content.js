@@ -12,6 +12,7 @@ const router = express.Router();
 
 schema.add(require('../schema/contactRequest'), 'contactRequest');
 
+// TOOD: Migrate to coRoute
 function invoke(generator) {
   return function invokeWrapper(req, res) {
     co.wrap(generator)(req, res)
