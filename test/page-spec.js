@@ -73,6 +73,19 @@ describe('Page', () => {
     }));
   });
 
+  describe('getAll', () => {
+    it.only('return all pages', function* () {
+      const page11 = chance.page();
+      const page12 = chance.page();
+      const page21 = chance.page();
+      const page22 = chance.page();
+
+      yield collection.insert([page11, page12, page21, page22]);
+      const allPages = yield Page.getAll();
+      expect(allPages).to.eql(_.sortBy([page11, page12, page21, page22].map(p => new Page(p)), p => p.data.order));
+    });
+  });
+
   describe('getBySection', () => {
     it('should return pages found by given section', function* () {
       const section1 = `section-${chance.word()}`;

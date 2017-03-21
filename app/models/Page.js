@@ -50,6 +50,15 @@ class Page {
     return new Page(pageData);
   }
 
+  static* getAll() {
+    const pages = yield db.collection('pages').find({})
+      .sort({ order: 1 })
+      .map(doc => new Page(doc))
+      .toArray();
+    logger.debug(`Found ${pages.length} pages in total`);
+    return pages;
+  }
+
   static* getBySection(section) {
     const pages = yield db.collection('pages')
       .find({ section })
