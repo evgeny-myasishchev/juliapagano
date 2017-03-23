@@ -11,6 +11,13 @@ module.exports = {
     buildDir: 'public/assets',
   },
 
+  api: {
+    // TODO: Make sure public key can be used (and should be)
+    jwtTokenSecret: process.env.API_JWT_TOKEN_SECRET,
+    jwtTokenIss: process.env.API_JWT_TOKEN_ISS,
+    jwtTokenAud: process.env.API_JWT_TOKEN_AUD,
+  },
+
   mongo: {
 
     // Examples:

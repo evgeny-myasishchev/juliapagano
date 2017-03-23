@@ -1,0 +1,12 @@
+const jwt = require('jsonwebtoken');
+
+const fs = require('fs');
+
+const cert = fs.readFileSync('infora-soft.pem');
+
+const token = jwt.verify(
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik16QXpPVFkwTkVWRFFrWkNNRGM1TVVJMlJUZ3dPRFJDT0RZMk56Z3lNMEZDUmpJNE5EZzJPQSJ9.eyJpc3MiOiJodHRwczovL2luZm9yYS1zb2Z0LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJOeDBpekx6WVJWUTB6T1NhZVh3NHR0U3RtZzdqdm15UUBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9zdGFnaW5nLmp1bGlhcGFnYW5vLmNvLnVrL2FwaSIsImV4cCI6MTQ5MDMwNTU2MCwiaWF0IjoxNDkwMjE5MTYwLCJzY29wZSI6InRlc3Qtc2NvcGUifQ.cl_iMzeeQTSqm9Te9mgeXZ-U_YRTzVOrP_jrWb623DgXE8QvUovgsC27vD8LEfaYGFYwcXW1-FwkYZ3SrxJObTK00SPjm4wgtOzhWqwZqjfJ50z5dgsHQ9YG06vsQKjtDZJ-ctDjwOOe4JVyReLWhD-ToCvLOCSiuwmVhzohN9ML2IzZQNK-SxomP3ulXnE3g7GdyRkUKuz9bQuMOs4oSHpKM30l2KintWmZkXUIgQBHlhF_v6aptAWN1sF9VmzBWrnm3dsC-tMuRi-p9Jkyv31hu12uvfhPm1KQt8oq2mqNvM4wPbtbDvMsuZ2If7Es8uDPp_urbU23Y-g2T5vQ3g',
+  cert
+);
+
+console.log(token);

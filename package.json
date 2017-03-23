@@ -26,6 +26,7 @@
     "ejs": "^2.2.4",
     "email-templates": "^2.5.2",
     "express": "^4.11.0",
+    "jsonwebtoken": "^7.3.0",
     "lodash": "^4.13.1",
     "lru-cache": "^4.0.1",
     "mongodb": "~2.2.12",

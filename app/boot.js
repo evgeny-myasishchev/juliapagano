@@ -3,7 +3,10 @@ const bunyanMiddleware = require('bunyan-middleware');
 const co = require('co');
 const config = require('config');
 const connectAssets = require('connect-assets');
+
 const db = require('./lib/db');
+const errorHandlingMiddleware = require('./lib/errorHandlingMiddleware');
+
 const logger = require('./logging').getLogger();
 const pages = require('./lib/pages');
 const Promise = require('bluebird');
@@ -40,10 +43,7 @@ function BootApp() {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(routes);
-    app.use((err, req, res, next) => {
-      logger.error(err.stack);
-      next(err);
-    });
+    app.use(errorHandlingMiddleware({ showStack: true })); // TODO: Take from config
   });
 
   this.withViewEngine = defineStage('viewEngine', (app) => {

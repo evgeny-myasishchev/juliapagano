@@ -4,6 +4,8 @@ module.exports = {
   maxLineLength : 150,
   aliases : {
     Promise : 'bluebird',
-    request : 'superagent'
+    request : 'superagent',
+    _ : 'lodash',
+    'jwt' : 'jsonwebtoken'
   }
 }
