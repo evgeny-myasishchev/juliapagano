@@ -73,11 +73,15 @@ describe('routeAuthMiddleware', () => {
         'HttpError { statusCode: 403, statusMessage: Forbidden, details: Invalid scopes. Required scopes: [required-scope-1,required-scope-2]');
   });
 
-  it('should throw HttpError if no Authorization token found', () => {
+  it('should throw HttpError with responseHeaders if no Authorization token found', () => {
     const data = createData((d) => { _.set(d, 'reqHeaders', {}); });
     const subj = createSubjects(data);
-    expect(() => subj.mw(data.req, data.res, subj.next)).to.throw(HttpError,
-        'HttpError { statusCode: 401, statusMessage: Unauthorized, details: Auth header not found');
+    expect(() => subj.mw(data.req, data.res, subj.next))
+      .to.throw(HttpError, 'HttpError { statusCode: 401, statusMessage: Unauthorized, details: Auth header not found')
+      .and.satisfy((err) => {
+        expect(err.responseHeaders).to.eql({ 'WWW-Authenticate': 'Bearer' });
+        return true;
+      });
   });
 
   it('should throw HttpError if auth header has wrong structure', () => {

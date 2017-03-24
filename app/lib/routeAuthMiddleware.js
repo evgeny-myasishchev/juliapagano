@@ -6,7 +6,6 @@ const logging = require('../logging');
 
 const logger = logging.getLogger();
 
-// TODO: Unit test
 module.exports = {
   init(config) {
     return function (scopes) {
@@ -17,7 +16,6 @@ module.exports = {
         const authHeader = req.get('Authorization');
         if (!authHeader) {
           const err = new HttpError(401, 'Unauthorized', 'Auth header not found');
-          // TODO: test
           err.responseHeaders = {
             'WWW-Authenticate': 'Bearer',
           };

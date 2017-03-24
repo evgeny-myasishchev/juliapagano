@@ -12,8 +12,7 @@ module.exports = {
   },
 
   api: {
-    // TODO: Make sure public key can be used (and should be)
-    jwtTokenSecret: process.env.API_JWT_TOKEN_SECRET,
+    jwtTokenSecret: process.env.API_JWT_TOKEN_SECRET, // Make sure public key should be used as a secret
     jwtTokenIss: process.env.API_JWT_TOKEN_ISS,
     jwtTokenAud: process.env.API_JWT_TOKEN_AUD,
   },
