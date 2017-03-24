@@ -5,9 +5,9 @@ const sinon = require('sinon');
 
 const HttpError = require('../app/lib/HttpError');
 const chance = require('./mocks/chance');
-const routeAuthMiddleware = require('../app/lib/routeAuthMiddleware');
+const bearerAuthMiddleware = require('../app/lib/bearerAuthMiddleware');
 
-describe('routeAuthMiddleware', () => {
+describe('bearerAuthMiddleware', () => {
   function createData(opts) {
     const data = {
       jwtTokenIss: `ISS-${chance.word()}`,
@@ -41,7 +41,7 @@ describe('routeAuthMiddleware', () => {
   function createSubjects(data, opts) {
     const requiredScopes = _.get(opts, 'requiredScopes', data.requiredScopes);
     return {
-      mw: routeAuthMiddleware.init(_.pick(data, ['jwtTokenSecret', 'jwtTokenIss', 'jwtTokenAud']))(requiredScopes),
+      mw: bearerAuthMiddleware.init(_.pick(data, ['jwtTokenSecret', 'jwtTokenIss', 'jwtTokenAud']))(requiredScopes),
       next: sinon.spy(),
     };
   }
@@ -63,7 +63,7 @@ describe('routeAuthMiddleware', () => {
   });
 
   it('should fail to create if missing config', () => {
-    expect(() => routeAuthMiddleware.init({})()).to.throw(Error, 'Config error: Please provide jwtTokenSecret');
+    expect(() => bearerAuthMiddleware.init({})()).to.throw(Error, 'Config error: Please provide jwtTokenSecret');
   });
 
   it('should throw HttpError if missing scopes', () => {
