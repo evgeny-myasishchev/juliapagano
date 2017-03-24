@@ -8,7 +8,7 @@ const logger = logging.getLogger();
 
 // TODO: Unit test
 module.exports = {
-  createMiddleware(config) {
+  init(config) {
     return function (scopes) {
       const tokenSecret = config.jwtTokenSecret;
       if (!tokenSecret) throw new Error('Config error: Please provide jwtTokenSecret');
@@ -17,6 +17,7 @@ module.exports = {
         const authHeader = req.get('Authorization');
         if (!authHeader) {
           const err = new HttpError(401, 'Unauthorized', 'Auth header not found');
+          // TODO: test
           err.responseHeaders = {
             'WWW-Authenticate': 'Bearer',
           };
@@ -40,7 +41,7 @@ module.exports = {
           err.stack = e.stack;
           throw err;
         }
-        const tokenScopes = token.scope.split(' ');
+        const tokenScopes = _.get(token, 'scope', '').split(' ');
         for (const requiredScope of scopes) {
           if (!_.includes(tokenScopes, requiredScope)) {
             logger.info({ msgData: { token, requiredScopes: scopes } }, 'Invalid scopes');
