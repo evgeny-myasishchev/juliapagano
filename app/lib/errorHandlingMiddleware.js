@@ -5,7 +5,6 @@ const logging = require('../logging');
 
 const logger = logging.getLogger();
 
-// TODO: Unit test
 module.exports = function (opts) {
   const showStack = _.get(opts, 'showStack', false);
 

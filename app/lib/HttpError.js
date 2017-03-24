@@ -1,4 +1,4 @@
-module.exports = class HttpError extends Error {
+class HttpError extends Error {
   constructor(statusCode, statusMessage, details) {
     super(`HttpError { statusCode: ${statusCode}, statusMessage: ${statusMessage}, details: ${details} }`);
     this.statusCode = statusCode;
@@ -12,4 +12,6 @@ module.exports = class HttpError extends Error {
     httpError.stack = err.stack;
     return httpError;
   }
-};
+}
+
+module.exports = HttpError;
