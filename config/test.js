@@ -2,6 +2,12 @@ const path = require('path');
 const chance = require('../test/mocks/chance');
 
 module.exports = {
+  api: {
+    jwtTokenSecret: `token-secret-${chance.word()}`,
+    jwtTokenIss: `issuer-${chance.word()}`,
+    jwtTokenAud: `audience-${chance.word()}`,
+  },
+
   mongo: {
     url: 'mongodb://localhost/juliapagano-test',
     log: {

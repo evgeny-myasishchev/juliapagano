@@ -3,12 +3,12 @@ const express = require('express');
 
 const Page = require('../models/Page');
 const coRoute = require('../lib/coRoute');
-const routeAuthMiddleware = require('../lib/routeAuthMiddleware');
+const bearerAuthMiddleware = require('../lib/bearerAuthMiddleware');
 
 const router = express.Router();
-const routeAuth = routeAuthMiddleware.createMiddleware(config.get('api'));
+const bearerAuth = bearerAuthMiddleware.init(config.get('api'));
 
-router.get('/api/v1/pages', routeAuth(['pages:read']), coRoute(getPages));
+router.get('/api/v1/pages', bearerAuth(['pages:read']), coRoute(getPages));
 
 function* getPages(req, res) {
   const pages = yield Page.getAll();
