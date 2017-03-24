@@ -43,7 +43,7 @@ function BootApp() {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(routes);
-    app.use(errorHandlingMiddleware({ showStack: true })); // TODO: Take from config
+    app.use(errorHandlingMiddleware(config.get('routesErrorHandling')));
   });
 
   this.withViewEngine = defineStage('viewEngine', (app) => {

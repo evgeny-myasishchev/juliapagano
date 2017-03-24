@@ -11,6 +11,10 @@ module.exports = {
     buildDir: 'public/assets',
   },
 
+  routesErrorHandling: {
+    showStack: true,
+  },
+
   api: {
     jwtTokenSecret: process.env.API_JWT_TOKEN_SECRET, // Make sure public key should be used as a secret
     jwtTokenIss: process.env.API_JWT_TOKEN_ISS,

@@ -1,4 +1,7 @@
 module.exports = {
+  routesErrorHandling: {
+    showStack: false,
+  },
   assets: {
     // Prod and stage should be the same
     build: true,
