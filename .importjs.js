@@ -1,4 +1,7 @@
 module.exports = {
+  environments : [
+    'node'
+  ],
   declarationKeyword : 'const',
   importDevDependencies : true,
   maxLineLength : 150,
