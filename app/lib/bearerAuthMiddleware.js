@@ -35,9 +35,7 @@ module.exports = {
             audience: config.jwtTokenAud,
           });
         } catch (e) {
-          const err = new HttpError(401, 'Unauthorized', e.message);
-          err.stack = e.stack;
-          throw err;
+          throw new HttpError(401, 'Unauthorized', e.message).inheritStack(e);
         }
         const tokenScopes = _.get(token, 'scope', '').split(' ');
         for (const requiredScope of scopes) {
