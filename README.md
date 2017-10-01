@@ -102,6 +102,14 @@ Deploy particular image
 DOCKER_TAG=2.2.0-rc1 ./node_modules/.bin/shipit staging deploy
 ```
 
+## Access mongo instances
+
+Get mongo IP on a target host:
+```docker inspect mongo-stage | grep IPAddress```
+
+Then start ssh tunnel on a local host:
+```ssh -nNL 27017:<container-ip-address>:27017 hbox```
+
 ## License
 
   [MIT](LICENSE)
