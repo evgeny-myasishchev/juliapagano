@@ -47,12 +47,7 @@ module.exports = {
     {
       type: 'extras',
       title: 'Extras',
-      description: 'Additional packages of prints and digital images are available with each session, please contact me for more info.',
-      items: [
-        'Unmounted prints - from £5',
-        'Photobooks - from £80',
-        'Digital images and collections - from £20',
-      ],
+      description: '<p>beautiful range of heirloom quality products is available to purchase after your photo session.</p>\r\n<p>Choose from custom made photo books, hand-crafted wall art and beautiful photo prints. Or digital images and collections for full flexibility. Contact me to request my brochure with full details.</p>',
     },
     {
       type: 'after-session',

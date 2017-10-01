@@ -9,7 +9,7 @@
         <img src="{{image.sizes[price.flickr.size].source}}" alt="{{image.title}}">
     </a>
   {% endfor %}
-  <p>{{ price.description }}</p>
+  <p>{% autoescape false %}{{ price.description }}{% endautoescape %}</p>
 {% endmacro %}
 
 {% extends '../layouts/application.swig' %}
@@ -38,14 +38,7 @@
   <div class="row">
     <div class="col-md-6">
       <p><h3>{{ extras.title }}</h3></p>
-      <p>{{ extras.description }}</p>
-      <div class="panel panel-default">
-        <ul class="list-group">
-          {% for extraItem in extras.items %}
-            <li class="list-group-item">{{ extraItem }}</li>
-          {% endfor %}
-        </ul>
-      </div>
+      <p>{% autoescape false %}{{ extras.description }}{% endautoescape %}</p>
     </div>
     <div class="col-md-6">
       <p>
